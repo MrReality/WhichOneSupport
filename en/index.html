@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhichOne - Decide with a little luck</title>
+  <meta name="description" content="WhichOne is an iPhone and iPad app for everyday lightweight decisions, solo decision games, built-in daily scenarios, and party modes." />
+  <style>
+    :root {
+      --ink: #171717;
+      --text: #272219;
+      --muted: #6a604f;
+      --paper: #fff8e6;
+      --cream: #fffdf6;
+      --line: rgba(23, 23, 23, 0.12);
+      --sun: #ffd84d;
+      --coral: #f47860;
+      --leaf: #aebf70;
+      --rose: #f3a8b5;
+      --shadow: 0 24px 60px rgba(26, 21, 9, 0.14);
+      --max: 1160px;
+      --radius: 8px;
+      --type-hero: clamp(52px, 6vw, 84px);
+      --type-section: clamp(34px, 4vw, 56px);
+      --type-card: clamp(22px, 2vw, 28px);
+      --type-body: 18px;
+      --type-small: 14px;
+      --type-caption: 13px;
+      --type-label: 12px;
+      --type-number: 56px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: linear-gradient(180deg, #fff1a5 0, var(--paper) 520px, #fff 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Noto Sans", "PingFang SC", "Hiragino Sans", sans-serif;
+      line-height: 1.72;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 30;
+      width: 100%;
+      height: 3px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: var(--ink);
+    }
+
+    .back-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 25;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23, 23, 23, 0.14);
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--sun);
+      box-shadow: 0 14px 34px rgba(23, 23, 23, 0.22);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+    }
+
+    .back-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .back-top.on-dark {
+      background-color: var(--sun);
+      color: var(--ink);
+      border-color: rgba(255, 216, 77, 0.72);
+    }
+
+    .back-top svg { width: 21px; height: 21px; stroke-width: 2.6; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 248, 230, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 40px));
+      min-height: 66px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 9px 22px rgba(23, 23, 23, 0.18);
+    }
+
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      color: #443d33;
+      font-size: var(--type-small);
+      font-weight: 850;
+    }
+
+    .links a,
+    .lang-button {
+      border-radius: var(--radius);
+      transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    }
+
+    .links a {
+      padding: 8px 10px;
+    }
+
+    .links a:hover,
+    .links a.is-active {
+      color: #000;
+      background: var(--sun);
+      box-shadow: inset 0 0 0 1px rgba(23, 23, 23, 0.14);
+    }
+
+    .language-switch {
+      display: flex;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .lang-button {
+      border: 0;
+      padding: 6px 8px;
+      background: transparent;
+      color: #443d33;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .lang-button.is-active {
+      background: var(--ink);
+      color: var(--sun);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    h1 { max-width: 760px; font-size: var(--type-hero); font-weight: 950; }
+    h2 { font-size: var(--type-section); font-weight: 950; }
+    h3 { font-size: var(--type-card); font-weight: 950; }
+
+    .eyebrow {
+      margin-bottom: 12px;
+      color: #766538;
+      font-size: var(--type-label);
+      font-weight: 950;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin-top: 24px;
+      color: #3a3329;
+      font-size: var(--type-body);
+      font-weight: 650;
+    }
+
+    .body-copy {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: var(--type-body);
+      font-weight: 560;
+    }
+
+    .section {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 96px 0;
+    }
+
+    section[id] { scroll-margin-top: 82px; }
+
+    .hero {
+      width: min(1280px, calc(100% - 40px));
+      min-height: min(760px, calc(100vh - 96px));
+      margin: 30px auto 0;
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      align-items: center;
+      gap: 42px;
+      padding: 46px;
+      overflow: hidden;
+      border: 1px solid rgba(23, 23, 23, 0.10);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 216, 77, 0.98), rgba(255, 242, 164, 0.98) 54%, #fff8dc 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding: 8px 11px;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.68);
+      color: #443827;
+      font-size: var(--type-small);
+      font-weight: 900;
+    }
+
+    .dots { display: inline-flex; gap: 5px; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+    .dots i:nth-child(2) { background: var(--leaf); }
+    .dots i:nth-child(3) { background: var(--rose); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 30px;
+    }
+
+    .pill {
+      padding: 10px 12px;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.74);
+      color: #3c352b;
+      font-size: var(--type-small);
+      font-weight: 900;
+      line-height: 1.25;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      background: var(--sun);
+      color: var(--ink);
+      box-shadow: inset 0 0 0 1px rgba(23, 23, 23, 0.14);
+    }
+
+    .stage { position: relative; min-height: 500px; }
+
+    .stage-card {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: min(610px, 100%);
+      transform: translate(-50%, -50%);
+      padding: 9px;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: 0 20px 54px rgba(23, 23, 23, 0.15);
+    }
+
+    .stage-card img { border-radius: 10px; }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 44px;
+      align-items: start;
+    }
+
+    .chapter-rail {
+      position: sticky;
+      top: 100px;
+      color: rgba(23, 23, 23, 0.54);
+      font-weight: 950;
+    }
+
+    .chapter-rail .number {
+      display: block;
+      color: var(--ink);
+      font-size: var(--type-number);
+      line-height: 0.9;
+    }
+
+    .chapter-rail .label {
+      display: block;
+      margin-top: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: var(--type-label);
+    }
+
+    .manifesto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .manifesto-text {
+      display: grid;
+      gap: 24px;
+      color: #3d3529;
+      font-size: var(--type-card);
+      font-weight: 780;
+      line-height: 1.42;
+    }
+
+    .manifesto-text .quiet {
+      color: var(--muted);
+      font-size: var(--type-body);
+      font-weight: 560;
+      line-height: 1.82;
+    }
+
+    .icon-panel,
+    .device-main,
+    .device-side,
+    .notes {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+
+    .icon-panel {
+      padding: 24px;
+      box-shadow: 0 14px 34px rgba(28, 22, 9, 0.08);
+    }
+
+    .icon-panel img {
+      width: 96px;
+      height: 96px;
+      margin-bottom: 20px;
+      border-radius: 22px;
+      box-shadow: 0 14px 32px rgba(23, 23, 23, 0.16);
+    }
+
+    .dark-section {
+      background: #171717;
+      color: #fff;
+    }
+
+    .dark-section .section { padding: 98px 0; }
+    .dark-section h2, .dark-section h3 { color: #fff; }
+    .dark-section .eyebrow { color: var(--sun); }
+    .dark-section .body-copy { color: rgba(255, 255, 255, 0.72); }
+    .dark-section .chapter-rail { color: rgba(255, 255, 255, 0.54); }
+    .dark-section .chapter-rail .number { color: #fff; }
+
+    .scene-stack {
+      display: grid;
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .scene-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.44fr) 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .scene-row:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 216, 77, 0.48);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .scene-copy { max-width: 560px; }
+    .scene-copy p {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: var(--type-body);
+      font-weight: 560;
+    }
+
+    .scene-number {
+      color: var(--sun);
+      font-size: var(--type-label);
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .scene-points {
+      display: grid;
+      gap: 8px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .scene-points li {
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: var(--type-small);
+      font-weight: 650;
+    }
+
+    .phone {
+      margin: 0;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 16px 38px rgba(28, 22, 9, 0.11);
+    }
+
+    .dark-section .phone {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .phone img {
+      width: 100%;
+      border-radius: 11px;
+    }
+
+    .phone figcaption {
+      padding: 12px 6px 4px;
+      color: var(--ink);
+      font-size: var(--type-small);
+      font-weight: 950;
+      line-height: 1.35;
+    }
+
+    .phone figcaption small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: var(--type-caption);
+      font-weight: 620;
+      line-height: 1.45;
+    }
+
+    .dark-section .phone figcaption { color: #fff; }
+    .dark-section .phone figcaption small { color: rgba(255, 255, 255, 0.64); }
+    .scene-row .phone figcaption { display: none; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .duo {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .duo .phone:nth-child(2) { margin-top: 54px; }
+
+    .design-board {
+      display: grid;
+      grid-template-columns: 1fr 0.82fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .swatch {
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      border-radius: var(--radius);
+      color: var(--ink);
+      font-weight: 950;
+      transition: transform 180ms ease;
+    }
+
+    .swatch:hover { transform: translateY(-6px); }
+    .swatch span {
+      display: block;
+      margin-top: 4px;
+      color: rgba(23, 23, 23, 0.62);
+      font-size: var(--type-label);
+      font-weight: 760;
+    }
+
+    .swatch.sun { background: var(--sun); }
+    .swatch.black { color: #fff; background: var(--ink); }
+    .swatch.black span { color: rgba(255, 255, 255, 0.66); }
+    .swatch.coral { background: var(--coral); }
+    .swatch.leaf { background: var(--leaf); }
+    .swatch.rose { background: var(--rose); }
+
+    .identity-card {
+      max-width: 360px;
+      justify-self: end;
+      overflow: hidden;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--cream);
+      box-shadow: 0 16px 38px rgba(28, 22, 9, 0.09);
+    }
+
+    .identity-card img {
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: var(--radius);
+    }
+
+    .craft .section { padding: 104px 0; }
+    .craft .split { grid-template-columns: 1fr 0.72fr; }
+    .craft .phone { max-width: 340px; justify-self: center; }
+    .craft .phone img { max-height: 560px; object-fit: cover; object-position: top; }
+
+    .craft-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .craft-card {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .craft-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 216, 77, 0.65);
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .craft-card .mark {
+      color: var(--sun);
+      font-size: 34px;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .craft-card p {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.68);
+      font-weight: 560;
+    }
+
+    .device-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 34px;
+    }
+
+    .device-main { padding: 18px; background: #fff; }
+    .device-main img { border-radius: var(--radius); }
+    .device-side { display: grid; background: #fff; }
+    .device-item { padding: 22px; border-bottom: 1px solid var(--line); }
+    .device-item:last-child { border-bottom: 0; }
+    .device-item p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .language-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .language {
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.8);
+      color: #443d33;
+      font-size: var(--type-caption);
+      font-weight: 900;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 32px;
+      align-items: start;
+      padding: 32px;
+    }
+
+    .note-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .note-list p {
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .note-list strong { color: var(--ink); }
+
+    .legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .legal-link {
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      font-size: var(--type-small);
+      font-weight: 900;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .legal-link:hover {
+      transform: translateY(-2px);
+      background: var(--sun);
+    }
+
+    .footer {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 64px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: var(--type-small);
+    }
+
+    .footer strong,
+    .footer a { color: var(--ink); font-weight: 850; }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .nav-right { gap: 8px; }
+      .links { display: none; }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .chapter,
+      .manifesto,
+      .scene-row,
+      .split,
+      .design-board,
+      .device-grid,
+      .notes {
+        grid-template-columns: 1fr;
+      }
+
+      .hero { min-height: auto; padding: 30px; }
+      .stage { min-height: auto; }
+      .stage-card, .chapter-rail { position: static; }
+      .stage-card { width: auto; transform: none; }
+      .duo .phone:nth-child(2) { margin-top: 0; }
+      .identity-card, .craft .phone { max-width: none; justify-self: stretch; }
+      .craft .split { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --type-hero: clamp(40px, 12vw, 56px);
+        --type-section: clamp(30px, 9vw, 42px);
+        --type-card: 22px;
+        --type-body: 16px;
+        --type-small: 13px;
+        --type-caption: 12px;
+        --type-number: 38px;
+      }
+
+      .nav-inner,
+      .section,
+      .footer { width: calc(100% - 28px); }
+
+      .nav-inner { min-height: auto; padding: 10px 0; align-items: flex-start; }
+      .brand { font-size: 20px; }
+      .brand-icon { width: 38px; height: 38px; border-radius: 11px; }
+      .nav-right { flex-direction: column; align-items: flex-end; gap: 8px; }
+      .language-switch { max-width: 215px; overflow-x: auto; }
+      .lang-button { flex: 0 0 auto; }
+
+      .hero {
+        width: calc(100% - 24px);
+        margin-top: 18px;
+        padding: 20px;
+        border-radius: 14px;
+        gap: 26px;
+      }
+
+      .kicker { margin-bottom: 16px; font-size: var(--type-caption); }
+      .lead { margin-top: 18px; }
+      .hero-actions { gap: 7px; margin-top: 22px; }
+      .pill { padding: 8px 9px; }
+      .stage-card { padding: 7px; border-radius: 12px; }
+
+      .section,
+      .dark-section .section,
+      .craft .section { padding: 54px 0; }
+
+      section[id] { scroll-margin-top: 76px; }
+      .chapter { gap: 22px; }
+
+      .chapter-rail {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .chapter-rail .number { line-height: 1; }
+      .chapter-rail .label { margin-top: 0; }
+
+      .manifesto,
+      .scene-stack,
+      .split,
+      .design-board,
+      .device-grid { gap: 18px; }
+
+      .manifesto-text { gap: 16px; line-height: 1.5; }
+      .icon-panel, .scene-row, .device-item { padding: 16px; }
+      .icon-panel img { width: 72px; height: 72px; border-radius: 18px; }
+      .scene-row { gap: 16px; }
+
+      .scene-row .phone img,
+      .duo .phone img,
+      .identity-card img,
+      .craft .phone img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .scene-points { margin-top: 14px; }
+      .phone { padding: 6px; border-radius: 14px; }
+      .phone img { border-radius: 9px; }
+      .phone figcaption { padding: 10px 4px 3px; }
+      .duo, .palette { grid-template-columns: 1fr; }
+      .swatch { min-height: 88px; }
+      .identity-card { padding: 10px; }
+      .craft-card { grid-template-columns: 38px 1fr; padding: 14px; }
+      .craft-card .mark { font-size: 28px; }
+      .device-main { padding: 10px; }
+      .language-list { gap: 5px; }
+      .language { padding: 6px 8px; }
+      .notes { padding: 20px; }
+      .footer { padding-bottom: 46px; }
+      .back-top { right: 14px; bottom: 14px; width: 42px; height: 42px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <button class="back-top" type="button" data-i18n-aria="backTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+      <path d="M12 19V5"></path>
+      <path d="m5 12 7-7 7 7"></path>
+    </svg>
+  </button>
+
+  <nav class="nav" aria-label="Page navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" data-i18n-aria="brandTop" aria-label="Back to top">
+        <span class="brand-icon"><img src="assets/icon.jpg" alt="WhichOne app icon" /></span>
+        <span>WhichOne</span>
+      </a>
+      <div class="nav-right">
+        <div class="links">
+          <a href="#origin" data-i18n="navOrigin">Origin</a>
+          <a href="#scenes" data-i18n="navScenes">Scenes</a>
+          <a href="#games" data-i18n="navGames">Modes</a>
+          <a href="#design" data-i18n="navDesign">Design</a>
+          <a href="#craft" data-i18n="navCraft">Craft</a>
+          <a href="#devices" data-i18n="navDevices">Devices</a>
+          <a href="#notes" data-i18n="navNotes">Notes</a>
+        </div>
+        <div class="language-switch" aria-label="Language switcher">
+          <button class="lang-button is-active" type="button" data-lang="en">EN</button>
+          <button class="lang-button" type="button" data-lang="ja">日本語</button>
+          <button class="lang-button" type="button" data-lang="ko">한국어</button>
+          <button class="lang-button" type="button" data-lang="zh-Hans">简体</button>
+          <button class="lang-button" type="button" data-lang="zh-Hant">繁體</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div data-reveal>
+      <div class="kicker"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span data-i18n="heroKicker">For life's little decisions</span></div>
+      <h1 data-i18n="heroTitle">Decide with a little luck.</h1>
+      <p class="lead" data-i18n="heroLead">WhichOne is made for choices that are too small for serious analysis but still manage to slow you down. What to eat, where to go, what to do, who goes first: put the options into a playful decision game and let the answer appear naturally.</p>
+      <div class="hero-actions" aria-label="App highlights">
+        <span class="pill" data-i18n="pillSolo">Solo decisions</span>
+        <span class="pill" data-i18n="pillScenes">Built-in scenarios</span>
+        <span class="pill" data-i18n="pillParty">Party modes</span>
+        <span class="pill" data-i18n="pillDevices">iPhone / iPad</span>
+        <span class="pill" data-i18n="pillLanguages">Multilingual</span>
+      </div>
+    </div>
+    <div class="stage" data-reveal>
+      <div class="stage-card">
+        <img src="assets/whichOne_0thumbnail.png" alt="WhichOne app screens and black cat visual identity" />
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section chapter" id="origin">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">01</span>
+        <span class="label" data-i18n="railOrigin">Origin</span>
+      </div>
+      <div class="manifesto">
+        <div class="manifesto-text" data-reveal>
+          <p data-i18n="originLine1">Many decisions feel tiring not because the options are complex, but because they are almost equally fine.</p>
+          <p data-i18n="originLine2">WhichOne turns that small hesitation into a tiny ritual: tap, spin, scratch, reveal, and move on.</p>
+          <p class="quiet" data-i18n="originLine3">It is closer to a gentle decision companion than a productivity tool. It keeps randomness light, then adds visual, tactile, and haptic feedback so the process feels worth handing over.</p>
+        </div>
+        <aside class="icon-panel" data-reveal>
+          <img src="assets/icon.jpg" alt="WhichOne app icon" />
+          <div class="eyebrow">Design Intent</div>
+          <h3 data-i18n="originCardTitle">Made for tiny everyday friction.</h3>
+          <p class="body-copy" data-i18n="originCardCopy">When everyone says “anything,” when the menu takes too long, or when a weekend plan stalls, WhichOne gives that moment a playful way forward.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="dark-section interactive" id="scenes">
+      <div class="section chapter">
+        <div class="chapter-rail" data-reveal>
+          <span class="number">02</span>
+          <span class="label" data-i18n="railScenes">Scenes</span>
+        </div>
+        <div>
+          <div data-reveal>
+            <div class="eyebrow">Everyday Scenes</div>
+            <h2 data-i18n="scenesTitle">Start with a real question, not a blank form.</h2>
+            <p class="body-copy" data-i18n="scenesLead">People often open the app with a specific question already in mind. WhichOne prepares common scenarios so users can begin without inventing a list first.</p>
+          </div>
+          <div class="scene-stack">
+            <article class="scene-row" data-reveal>
+              <figure class="phone">
+                <img src="assets/whichOne_option_food.png" alt="Food choices in WhichOne" />
+                <figcaption data-i18n="sceneFoodCaption">What to eat</figcaption>
+              </figure>
+              <div class="scene-copy">
+                <div class="scene-number">Scene 01</div>
+                <h3 data-i18n="sceneFoodTitle">Get dinner moving.</h3>
+                <p data-i18n="sceneFoodCopy">For dinner, takeout, or a meal with friends, the hard part is often that every option is acceptable. Built-in food choices lower the starting cost and can still be adjusted to taste.</p>
+                <ul class="scene-points">
+                  <li data-i18n="sceneFoodPoint1">Preset food options reduce blank-page work.</li>
+                  <li data-i18n="sceneFoodPoint2">Useful for group meals, takeout, and weekday dinners.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="scene-row" data-reveal>
+              <figure class="phone">
+                <img src="assets/whichOne_option_travel.png" alt="Travel choices in WhichOne" />
+                <figcaption data-i18n="sceneTravelCaption">Where to go</figcaption>
+              </figure>
+              <div class="scene-copy">
+                <div class="scene-number">Scene 02</div>
+                <h3 data-i18n="sceneTravelTitle">Give an outing a direction.</h3>
+                <p data-i18n="sceneTravelCopy">When a weekend, trip, or quick outing has no clear destination, a random result does not replace planning; it simply gives the plan a first step.</p>
+                <ul class="scene-points">
+                  <li data-i18n="sceneTravelPoint1">Good for places, nearby activities, and short plans.</li>
+                  <li data-i18n="sceneTravelPoint2">The result suggests a direction while the user stays in control.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="scene-row" data-reveal>
+              <figure class="phone">
+                <img src="assets/whichOne_option_activity.png" alt="Activity choices in WhichOne" />
+                <figcaption data-i18n="sceneActivityCaption">What to do</figcaption>
+              </figure>
+              <div class="scene-copy">
+                <div class="scene-number">Scene 03</div>
+                <h3 data-i18n="sceneActivityTitle">Turn free time into a small draw.</h3>
+                <p data-i18n="sceneActivityCopy">Movies, walks, chores, games, and small personal plans can all become a light decision. Once the result appears, it is easier to act.</p>
+                <ul class="scene-points">
+                  <li data-i18n="sceneActivityPoint1">Suitable for leisure, family time, and personal tasks.</li>
+                  <li data-i18n="sceneActivityPoint2">Turns “anything is fine” into something executable.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section chapter" id="games">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">03</span>
+        <span class="label" data-i18n="railGames">Game Modes</span>
+      </div>
+      <div class="split">
+        <div data-reveal>
+          <div class="eyebrow">Game Modes</div>
+          <h2 data-i18n="gamesTitle">A random result deserves a playful process.</h2>
+          <p class="body-copy" data-i18n="gamesCopy1">A plain answer can feel thin. WhichOne hides the result inside small games: answer book pages, coin flips, capsules, wheels, scratch cards, and other reveals make randomness visible, tactile, and expected.</p>
+          <p class="body-copy" data-i18n="gamesCopy2">Party mode turns the screen into a shared moment. Touch selection, bottle spinning, bomb cards, and capsule games let people wait for the result together instead of having one person announce it.</p>
+        </div>
+        <div class="duo" data-reveal>
+          <figure class="phone">
+            <img src="assets/whichOne_single_game.png" alt="Single player gacha game in WhichOne" />
+            <figcaption><span data-i18n="soloCaption">Solo game</span><small data-i18n="soloSmall">Draw one result from the options and keep result history.</small></figcaption>
+          </figure>
+          <figure class="phone">
+            <img src="assets/whichOne_party_game.png" alt="Party card bomb game in WhichOne" />
+            <figcaption><span data-i18n="partyCaption">Party game</span><small data-i18n="partySmall">Bomb cards work well when several people gather around one device.</small></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section chapter" id="design">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">04</span>
+        <span class="label" data-i18n="railDesign">Visual</span>
+      </div>
+      <div class="design-board">
+        <div data-reveal>
+          <div class="eyebrow">Visual Language</div>
+          <h2 data-i18n="designTitle">Bright, not loud. Cute, not childish.</h2>
+          <p class="body-copy" data-i18n="designCopy1">The high-brightness yellow makes decision-making feel lighter. Black anchors text, buttons, and the cat character. Coral, green, and pink stay as measured accents for scenarios and feedback.</p>
+          <p class="body-copy" data-i18n="designCopy2">The black cat is not just decoration. It gives the app a companion-like personality: a little mischievous, as if saying “stop overthinking and try it.”</p>
+          <div class="palette" aria-label="WhichOne color palette">
+            <div class="swatch sun">Yellow<span>light, decisive</span></div>
+            <div class="swatch black">Black<span>contrast, focus</span></div>
+            <div class="swatch coral">Coral<span>action, result</span></div>
+            <div class="swatch leaf">Green<span>balance, calm</span></div>
+            <div class="swatch rose">Pink<span>play, warmth</span></div>
+          </div>
+        </div>
+        <div class="identity-card" data-reveal>
+          <img src="assets/whichOne_home.png" alt="WhichOne home screen" />
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section craft" id="craft">
+      <div class="section chapter">
+        <div class="chapter-rail" data-reveal>
+          <span class="number">05</span>
+          <span class="label" data-i18n="railCraft">Craft</span>
+        </div>
+        <div>
+          <div class="split">
+            <div data-reveal>
+              <div class="eyebrow">Interaction Craft</div>
+              <h2 data-i18n="craftTitle">Delicate feedback gives the result weight.</h2>
+              <p class="body-copy" data-i18n="craftLead">Random apps can easily feel weightless. WhichOne tunes touch feedback, physical motion, and Apple haptics so each game has its own rhythm instead of feeling like the same button with a new skin.</p>
+              <div class="craft-grid" data-reveal>
+                <article class="craft-card">
+                  <div class="mark">01</div>
+                  <div>
+                    <h3 data-i18n="craft1Title">Actions have anticipation and closure</h3>
+                    <p data-i18n="craft1Copy">Wheel slowdown, capsule drawing, and card flipping all create a short wait before the result lands.</p>
+                  </div>
+                </article>
+                <article class="craft-card">
+                  <div class="mark">02</div>
+                  <div>
+                    <h3 data-i18n="craft2Title">Touch is more than tapping</h3>
+                    <p data-i18n="craft2Copy">Multi-touch selection, scratch cards, and card games make gestures part of the experience.</p>
+                  </div>
+                </article>
+                <article class="craft-card">
+                  <div class="mark">03</div>
+                  <div>
+                    <h3 data-i18n="craft3Title">Haptics match key moments</h3>
+                    <p data-i18n="craft3Copy">Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <figure class="phone" data-reveal>
+              <img src="assets/whichOne_party_game2.png" alt="Multi-touch party mode in WhichOne" />
+              <figcaption><span data-i18n="touchCaption">Multi-touch</span><small data-i18n="touchSmall">Several participants press the screen together; highlight and feedback reveal the result.</small></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section chapter" id="devices">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">06</span>
+        <span class="label" data-i18n="railDevices">Devices</span>
+      </div>
+      <div data-reveal>
+        <div class="eyebrow">Accessibility & Devices</div>
+        <h2 data-i18n="devicesTitle">Designed for real use: color, type, orientation, and devices.</h2>
+        <p class="body-copy" data-i18n="devicesLead">WhichOne is not built for one ideal screen size. It considers iPhone and iPad, portrait and landscape, solo handheld use and people gathering around a device, while keeping color, type, and feedback clear for more users.</p>
+        <div class="device-grid">
+          <div class="device-main">
+            <img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" />
+          </div>
+          <div class="device-side">
+            <div class="device-item">
+              <h3 data-i18n="accessColorTitle">Color choices for color-weak users</h3>
+              <p data-i18n="accessColorCopy">Status is not communicated through color alone. Text, shapes, button forms, and contrast work together so key information remains understandable.</p>
+            </div>
+            <div class="device-item">
+              <h3 data-i18n="accessTypeTitle">2x text size and large type</h3>
+              <p data-i18n="accessTypeCopy">Important titles, options, buttons, and result feedback are designed to remain readable and tappable even when system text size is increased significantly.</p>
+            </div>
+            <div class="device-item">
+              <h3 data-i18n="accessOrientTitle">Portrait, landscape, and iPad</h3>
+              <p data-i18n="accessOrientCopy">Solo decisions feel natural on iPhone in portrait, while party play and group selection benefit from iPad or landscape layouts.</p>
+            </div>
+            <div class="device-item">
+              <h3 data-i18n="languagesTitle">Languages</h3>
+              <p data-i18n="languagesCopy">Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported so scenarios, options, and results are easy to understand.</p>
+              <div class="language-list" aria-label="Supported languages">
+                <span class="language">简体中文</span>
+                <span class="language">繁體中文</span>
+                <span class="language">日本語</span>
+                <span class="language">한국어</span>
+                <span class="language">English</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="notes">
+      <div class="notes" data-reveal>
+        <div>
+          <div class="eyebrow">Product Notes</div>
+          <h2 data-i18n="notesTitle">A few boundaries.</h2>
+          <p class="body-copy" data-i18n="notesLead">WhichOne is for everyday lightweight decisions and group interaction. It is not for high-risk professional judgment.</p>
+        </div>
+        <div class="note-list">
+          <p><strong data-i18n="noteUseStrong">Use boundary:</strong> <span data-i18n="noteUse">Suitable for low-risk choices such as food, places, activities, who goes first, and grouping. Not intended for financial, medical, or legal decisions.</span></p>
+          <p><strong data-i18n="noteRandomStrong">Random and playful:</strong> <span data-i18n="noteRandom">The app does not predict the future and does not include real-money betting, cash rewards, or gambling mechanics.</span></p>
+          <p><strong data-i18n="noteDataStrong">Data and purchase:</strong> <span data-i18n="noteData">User options, recent picks, and history are mainly stored on device. An optional in-app purchase removes ads.</span></p>
+          <div class="legal-links" aria-label="Legal links">
+            <a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_privacy_policy_global.html" target="_blank" rel="noopener noreferrer" data-i18n="privacy">Privacy Policy</a>
+            <a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_terms_global.html" target="_blank" rel="noopener noreferrer" data-i18n="terms">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><strong>WhichOne</strong> - <span data-i18n="footerTagline">Decide with a little luck.</span> Developer: <strong>MixReality</strong>.</p>
+    <p>
+      <span data-i18n="footerCopy">This page introduces app features, design, and use cases. It does not replace App Store metadata, privacy documentation, or in-app explanations.</span>
+      <a href="https://mrreality.github.io/WhichOneSupport/whichone_privacy_policy_global.html" target="_blank" rel="noopener noreferrer" data-i18n="privacy">Privacy Policy</a>
+      ·
+      <a href="https://mrreality.github.io/WhichOneSupport/whichone_terms_global.html" target="_blank" rel="noopener noreferrer" data-i18n="terms">Terms of Use</a>
+    </p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        docTitle: "WhichOne - Decide with a little luck",
+        backTop: "Back to top",
+        brandTop: "Back to top",
+        navOrigin: "Origin",
+        navScenes: "Scenes",
+        navGames: "Modes",
+        navDesign: "Design",
+        navCraft: "Craft",
+        navDevices: "Devices",
+        navNotes: "Notes",
+        heroKicker: "For life's little decisions",
+        heroTitle: "Decide with a little luck.",
+        heroLead: "WhichOne is made for choices that are too small for serious analysis but still manage to slow you down. What to eat, where to go, what to do, who goes first: put the options into a playful decision game and let the answer appear naturally.",
+        pillSolo: "Solo decisions",
+        pillScenes: "Built-in scenarios",
+        pillParty: "Party modes",
+        pillDevices: "iPhone / iPad",
+        pillLanguages: "Multilingual",
+        railOrigin: "Origin",
+        originLine1: "Many decisions feel tiring not because the options are complex, but because they are almost equally fine.",
+        originLine2: "WhichOne turns that small hesitation into a tiny ritual: tap, spin, scratch, reveal, and move on.",
+        originLine3: "It is closer to a gentle decision companion than a productivity tool. It keeps randomness light, then adds visual, tactile, and haptic feedback so the process feels worth handing over.",
+        originCardTitle: "Made for tiny everyday friction.",
+        originCardCopy: "When everyone says “anything,” when the menu takes too long, or when a weekend plan stalls, WhichOne gives that moment a playful way forward.",
+        railScenes: "Scenes",
+        scenesTitle: "Start with a real question, not a blank form.",
+        scenesLead: "People often open the app with a specific question already in mind. WhichOne prepares common scenarios so users can begin without inventing a list first.",
+        sceneFoodCaption: "What to eat",
+        sceneFoodTitle: "Get dinner moving.",
+        sceneFoodCopy: "For dinner, takeout, or a meal with friends, the hard part is often that every option is acceptable. Built-in food choices lower the starting cost and can still be adjusted to taste.",
+        sceneFoodPoint1: "Preset food options reduce blank-page work.",
+        sceneFoodPoint2: "Useful for group meals, takeout, and weekday dinners.",
+        sceneTravelCaption: "Where to go",
+        sceneTravelTitle: "Give an outing a direction.",
+        sceneTravelCopy: "When a weekend, trip, or quick outing has no clear destination, a random result does not replace planning; it simply gives the plan a first step.",
+        sceneTravelPoint1: "Good for places, nearby activities, and short plans.",
+        sceneTravelPoint2: "The result suggests a direction while the user stays in control.",
+        sceneActivityCaption: "What to do",
+        sceneActivityTitle: "Turn free time into a small draw.",
+        sceneActivityCopy: "Movies, walks, chores, games, and small personal plans can all become a light decision. Once the result appears, it is easier to act.",
+        sceneActivityPoint1: "Suitable for leisure, family time, and personal tasks.",
+        sceneActivityPoint2: "Turns “anything is fine” into something executable.",
+        railGames: "Game Modes",
+        gamesTitle: "A random result deserves a playful process.",
+        gamesCopy1: "A plain answer can feel thin. WhichOne hides the result inside small games: answer book pages, coin flips, capsules, wheels, scratch cards, and other reveals make randomness visible, tactile, and expected.",
+        gamesCopy2: "Party mode turns the screen into a shared moment. Touch selection, bottle spinning, bomb cards, and capsule games let people wait for the result together instead of having one person announce it.",
+        soloCaption: "Solo game",
+        soloSmall: "Draw one result from the options and keep result history.",
+        partyCaption: "Party game",
+        partySmall: "Bomb cards work well when several people gather around one device.",
+        railDesign: "Visual",
+        designTitle: "Bright, not loud. Cute, not childish.",
+        designCopy1: "The high-brightness yellow makes decision-making feel lighter. Black anchors text, buttons, and the cat character. Coral, green, and pink stay as measured accents for scenarios and feedback.",
+        designCopy2: "The black cat is not just decoration. It gives the app a companion-like personality: a little mischievous, as if saying “stop overthinking and try it.”",
+        railCraft: "Craft",
+        craftTitle: "Delicate feedback gives the result weight.",
+        craftLead: "Random apps can easily feel weightless. WhichOne tunes touch feedback, physical motion, and Apple haptics so each game has its own rhythm instead of feeling like the same button with a new skin.",
+        craft1Title: "Actions have anticipation and closure",
+        craft1Copy: "Wheel slowdown, capsule drawing, and card flipping all create a short wait before the result lands.",
+        craft2Title: "Touch is more than tapping",
+        craft2Copy: "Multi-touch selection, scratch cards, and card games make gestures part of the experience.",
+        craft3Title: "Haptics match key moments",
+        craft3Copy: "Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.",
+        touchCaption: "Multi-touch",
+        touchSmall: "Several participants press the screen together; highlight and feedback reveal the result.",
+        railDevices: "Devices",
+        devicesTitle: "Designed for real use: color, type, orientation, and devices.",
+        devicesLead: "WhichOne is not built for one ideal screen size. It considers iPhone and iPad, portrait and landscape, solo handheld use and people gathering around a device, while keeping color, type, and feedback clear for more users.",
+        accessColorTitle: "Color choices for color-weak users",
+        accessColorCopy: "Status is not communicated through color alone. Text, shapes, button forms, and contrast work together so key information remains understandable.",
+        accessTypeTitle: "2x text size and large type",
+        accessTypeCopy: "Important titles, options, buttons, and result feedback are designed to remain readable and tappable even when system text size is increased significantly.",
+        accessOrientTitle: "Portrait, landscape, and iPad",
+        accessOrientCopy: "Solo decisions feel natural on iPhone in portrait, while party play and group selection benefit from iPad or landscape layouts.",
+        languagesTitle: "Languages",
+        languagesCopy: "Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported so scenarios, options, and results are easy to understand.",
+        notesTitle: "A few boundaries.",
+        notesLead: "WhichOne is for everyday lightweight decisions and group interaction. It is not for high-risk professional judgment.",
+        noteUseStrong: "Use boundary:",
+        noteUse: "Suitable for low-risk choices such as food, places, activities, who goes first, and grouping. Not intended for financial, medical, or legal decisions.",
+        noteRandomStrong: "Random and playful:",
+        noteRandom: "The app does not predict the future and does not include real-money betting, cash rewards, or gambling mechanics.",
+        noteDataStrong: "Data and purchase:",
+        noteData: "User options, recent picks, and history are mainly stored on device. An optional in-app purchase removes ads.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Use",
+        footerTagline: "Decide with a little luck.",
+        footerCopy: "This page introduces app features, design, and use cases. It does not replace App Store metadata, privacy documentation, or in-app explanations."
+      },
+      ja: {
+        docTitle: "WhichOne - ちょっとした運に決めてもらう",
+        backTop: "トップへ戻る",
+        brandTop: "トップへ戻る",
+        navOrigin: "背景",
+        navScenes: "シーン",
+        navGames: "遊び方",
+        navDesign: "デザイン",
+        navCraft: "操作感",
+        navDevices: "端末",
+        navNotes: "補足",
+        heroKicker: "日常の小さな選択のために",
+        heroTitle: "少しの運に、選択をまかせる。",
+        heroLead: "WhichOne は、真剣に分析するほどではないのに、なぜか手が止まる小さな選択のためのアプリです。何を食べるか、どこへ行くか、何をするか、誰が先か。選択肢を楽しいゲームに入れるだけで、答えが自然に現れます。",
+        pillSolo: "ひとりで決める",
+        pillScenes: "内蔵シーン",
+        pillParty: "パーティーモード",
+        pillDevices: "iPhone / iPad",
+        pillLanguages: "多言語",
+        railOrigin: "背景",
+        originLine1: "選択が疲れるのは、選択肢が複雑だからではなく、どれも同じくらい良いからです。",
+        originLine2: "WhichOne は、その小さな迷いを、タップして、回して、削って、結果を見るという小さな儀式に変えます。",
+        originLine3: "効率化ツールというより、やさしい決定の相棒です。軽いランダム性に、視覚・触感・ハプティックのフィードバックを加え、任せたくなる体験にしています。",
+        originCardTitle: "日常の小さな引っかかりのために。",
+        originCardCopy: "みんなが「なんでもいい」と言うとき、メニュー選びが長引くとき、週末の予定が決まらないとき、WhichOne は前に進むきっかけを作ります。",
+        railScenes: "シーン",
+        scenesTitle: "空白フォームではなく、実際の問いから始める。",
+        scenesLead: "ユーザーはたいてい、具体的な悩みを持ってアプリを開きます。WhichOne はよくあるシーンを用意し、リスト作りから始めなくてもすぐ選べるようにします。",
+        sceneFoodCaption: "何を食べる？",
+        sceneFoodTitle: "夕食を動かす。",
+        sceneFoodCopy: "夕食、テイクアウト、友人との食事では、選択肢がどれも悪くないことが難しさになります。内蔵の食事候補で開始の負担を下げ、好みに合わせて調整できます。",
+        sceneFoodPoint1: "食事候補が用意され、空白から始める必要がありません。",
+        sceneFoodPoint2: "会食、テイクアウト、平日の夕食に便利です。",
+        sceneTravelCaption: "どこへ行く？",
+        sceneTravelTitle: "外出に方向を与える。",
+        sceneTravelCopy: "週末や旅行、ちょっとした外出の目的地が決まらないとき、ランダムな結果は計画を置き換えるのではなく、最初の一歩を作ります。",
+        sceneTravelPoint1: "場所、近場の活動、短い予定に向いています。",
+        sceneTravelPoint2: "方向を示しつつ、最終判断はユーザーに残します。",
+        sceneActivityCaption: "何をする？",
+        sceneActivityTitle: "空き時間を小さなくじにする。",
+        sceneActivityCopy: "映画、散歩、家事、ゲーム、小さな予定を軽い選択にできます。結果が出ると、次の行動に移りやすくなります。",
+        sceneActivityPoint1: "余暇、家族時間、個人タスクに適しています。",
+        sceneActivityPoint2: "「なんでもいい」を実行できる結果に変えます。",
+        railGames: "遊び方",
+        gamesTitle: "ランダムな結果には、楽しい過程が必要です。",
+        gamesCopy1: "ただ答えを出すだけでは体験は薄くなります。答えの本、コイン、カプセル、ルーレット、スクラッチなどが、ランダムを見えて触れられるものにします。",
+        gamesCopy2: "パーティーモードでは、画面が共有の場になります。タッチ選択、ボトル回し、爆弾カード、カプセルなどで、みんなが一緒に結果を待てます。",
+        soloCaption: "ソロゲーム",
+        soloSmall: "選択肢から結果を引き、履歴を残します。",
+        partyCaption: "パーティーゲーム",
+        partySmall: "爆弾カードは複数人で一台の端末を囲む場面に向いています。",
+        railDesign: "ビジュアル",
+        designTitle: "明るいけれど騒がしくない。かわいいけれど幼すぎない。",
+        designCopy1: "明るい黄色は、決めることを軽く感じさせます。黒は文字、ボタン、猫のキャラクターを支える軸です。コーラル、グリーン、ピンクは控えめなアクセントとして使います。",
+        designCopy2: "黒猫はただの装飾ではありません。少しいたずらっぽく「考えすぎず試してみよう」と言う相棒のような存在です。",
+        railCraft: "操作感",
+        craftTitle: "細やかなフィードバックが、結果に重みを与える。",
+        craftLead: "ランダム系アプリは軽く感じられがちです。WhichOne はタッチ、物理的な動き、Apple のハプティックを調整し、遊びごとに違うリズムを持たせています。",
+        craft1Title: "動きには前奏と終わりがある",
+        craft1Copy: "ルーレットの減速、カプセル抽選、カードめくりは、結果までの短い待ち時間を作ります。",
+        craft2Title: "タッチはタップだけではない",
+        craft2Copy: "マルチタッチ、スクラッチ、カード操作が、ジェスチャーそのものを体験の一部にします。",
+        craft3Title: "重要な瞬間に触感を合わせる",
+        craft3Copy: "確認、結果表示、状態変化にハプティックを合わせ、フィードバックを感じやすくします。",
+        touchCaption: "マルチタッチ",
+        touchSmall: "複数人が同時に画面を押し、ハイライトとフィードバックで結果が出ます。",
+        railDevices: "端末",
+        devicesTitle: "色、文字、向き、端末まで実際の利用に合わせる。",
+        devicesLead: "WhichOne は理想的な一つの画面だけを前提にしていません。iPhone と iPad、縦向きと横向き、ひとりで持つ場面と複数人で囲む場面を考慮し、色・文字・フィードバックをより多くのユーザーに分かりやすくします。",
+        accessColorTitle: "色弱ユーザーにも配慮した色設計",
+        accessColorCopy: "状態は色だけで伝えません。文字、形、ボタンの形状、コントラストを組み合わせ、重要な情報を理解しやすくします。",
+        accessTypeTitle: "2倍の文字サイズと大きな文字",
+        accessTypeCopy: "タイトル、選択肢、ボタン、結果表示は、システム文字サイズを大きくしても読みやすく押しやすいよう配慮しています。",
+        accessOrientTitle: "縦横画面と iPad",
+        accessOrientCopy: "ひとりの選択は iPhone 縦画面に自然で、パーティーやグループ選択は iPad や横画面が活きます。",
+        languagesTitle: "言語",
+        languagesCopy: "簡体字中国語、繁体字中国語、日本語、韓国語、英語に対応し、シーン、選択肢、結果を理解しやすくします。",
+        notesTitle: "いくつかの補足。",
+        notesLead: "WhichOne は日常の軽い決定とグループでのやり取りのためのアプリで、高リスクな専門判断には使いません。",
+        noteUseStrong: "用途の範囲：",
+        noteUse: "食事、場所、活動、誰が先か、グループ分けなど低リスクの選択に適しています。金融、医療、法律判断を目的としていません。",
+        noteRandomStrong: "ランダムと遊び：",
+        noteRandom: "未来を予測せず、リアルマネー賭博、現金報酬、ギャンブル機能は含みません。",
+        noteDataStrong: "データと購入：",
+        noteData: "選択肢、最近の結果、履歴は主に端末内に保存されます。任意のアプリ内購入で広告を削除できます。",
+        privacy: "プライバシーポリシー",
+        terms: "利用規約",
+        footerTagline: "少しの運に、選択をまかせる。",
+        footerCopy: "このページはアプリの機能、デザイン、利用シーンを紹介するもので、App Store のメタデータ、プライバシー文書、アプリ内説明の代替ではありません。"
+      },
+      ko: {
+        docTitle: "WhichOne - 작은 운에 결정을 맡기기",
+        backTop: "맨 위로",
+        brandTop: "맨 위로",
+        navOrigin: "기획",
+        navScenes: "상황",
+        navGames: "모드",
+        navDesign: "디자인",
+        navCraft: "피드백",
+        navDevices: "기기",
+        navNotes: "안내",
+        heroKicker: "일상의 작은 선택을 위해",
+        heroTitle: "작은 운에 선택을 맡겨보세요.",
+        heroLead: "WhichOne은 진지하게 분석할 만큼 크지는 않지만 은근히 발목을 잡는 작은 선택을 위해 만든 앱입니다. 무엇을 먹을지, 어디로 갈지, 무엇을 할지, 누가 먼저 할지. 선택지를 재미있는 결정 게임에 넣으면 답이 자연스럽게 나타납니다.",
+        pillSolo: "혼자 결정",
+        pillScenes: "내장 상황",
+        pillParty: "파티 모드",
+        pillDevices: "iPhone / iPad",
+        pillLanguages: "다국어",
+        railOrigin: "기획",
+        originLine1: "선택이 피곤한 이유는 선택지가 복잡해서가 아니라, 모두 비슷하게 괜찮기 때문일 때가 많습니다.",
+        originLine2: "WhichOne은 그 작은 망설임을 탭하고, 돌리고, 긁고, 확인하는 작은 의식으로 바꿉니다.",
+        originLine3: "효율 도구라기보다 부드러운 결정 도우미에 가깝습니다. 가벼운 랜덤성에 시각, 터치, 햅틱 피드백을 더해 맡기고 싶은 경험을 만듭니다.",
+        originCardTitle: "일상의 작은 멈춤을 위해.",
+        originCardCopy: "모두가 “아무거나”라고 할 때, 메뉴를 오래 고를 때, 주말 계획이 멈출 때 WhichOne은 앞으로 나아갈 재미있는 계기를 줍니다.",
+        railScenes: "상황",
+        scenesTitle: "빈 입력창이 아니라 실제 질문에서 시작합니다.",
+        scenesLead: "사용자는 이미 구체적인 질문을 가지고 앱을 여는 경우가 많습니다. WhichOne은 자주 쓰는 상황을 준비해 두어 목록을 처음부터 만들지 않아도 바로 시작할 수 있습니다.",
+        sceneFoodCaption: "무엇을 먹을까",
+        sceneFoodTitle: "저녁 선택을 움직이게 합니다.",
+        sceneFoodCopy: "저녁, 배달, 친구와의 식사에서는 선택지가 모두 괜찮다는 점이 오히려 어렵습니다. 내장 음식 선택지는 시작 부담을 낮추고 취향에 맞게 조정할 수 있습니다.",
+        sceneFoodPoint1: "미리 준비된 음식 선택지로 빈 화면에서 시작하지 않습니다.",
+        sceneFoodPoint2: "모임 식사, 배달, 평일 저녁에 유용합니다.",
+        sceneTravelCaption: "어디로 갈까",
+        sceneTravelTitle: "외출에 방향을 줍니다.",
+        sceneTravelCopy: "주말, 여행, 짧은 외출의 목적지가 정해지지 않았을 때 랜덤 결과는 계획을 대신하지 않고 첫걸음을 만들어 줍니다.",
+        sceneTravelPoint1: "장소, 주변 활동, 짧은 계획에 적합합니다.",
+        sceneTravelPoint2: "방향을 제안하지만 최종 결정은 사용자가 합니다.",
+        sceneActivityCaption: "무엇을 할까",
+        sceneActivityTitle: "빈 시간을 작은 추첨으로 바꿉니다.",
+        sceneActivityCopy: "영화, 산책, 집안일, 게임, 작은 개인 계획도 가벼운 선택이 될 수 있습니다. 결과가 나오면 행동으로 옮기기 쉬워집니다.",
+        sceneActivityPoint1: "여가, 가족 시간, 개인 할 일에 적합합니다.",
+        sceneActivityPoint2: "“아무거나”를 실행 가능한 결과로 바꿉니다.",
+        railGames: "모드",
+        gamesTitle: "랜덤 결과에는 즐거운 과정이 필요합니다.",
+        gamesCopy1: "그냥 답만 나오면 경험이 얇아집니다. 답의 책, 동전, 캡슐, 룰렛, 스크래치 카드 같은 방식이 랜덤을 보고 만질 수 있는 과정으로 만듭니다.",
+        gamesCopy2: "파티 모드는 화면을 함께 보는 순간으로 바꿉니다. 터치 선택, 병 돌리기, 폭탄 카드, 캡슐 게임으로 모두가 함께 결과를 기다릴 수 있습니다.",
+        soloCaption: "솔로 게임",
+        soloSmall: "선택지에서 결과를 뽑고 기록을 남깁니다.",
+        partyCaption: "파티 게임",
+        partySmall: "폭탄 카드는 여러 사람이 한 기기를 둘러싼 상황에 어울립니다.",
+        railDesign: "디자인",
+        designTitle: "밝지만 시끄럽지 않고, 귀엽지만 유치하지 않게.",
+        designCopy1: "밝은 노란색은 결정하는 일을 가볍게 느끼게 합니다. 검정은 텍스트, 버튼, 고양이 캐릭터를 잡아주는 기준이 됩니다. 코럴, 그린, 핑크는 상황과 피드백을 위한 절제된 포인트입니다.",
+        designCopy2: "검은 고양이는 단순한 장식이 아닙니다. “너무 고민하지 말고 한번 해봐”라고 말하는 장난스러운 동반자 같은 성격을 만듭니다.",
+        railCraft: "피드백",
+        craftTitle: "섬세한 피드백이 결과에 무게를 줍니다.",
+        craftLead: "랜덤 앱은 쉽게 가볍게 느껴질 수 있습니다. WhichOne은 터치 피드백, 물리 움직임, Apple 햅틱을 조정해 각 게임이 고유한 리듬을 갖게 합니다.",
+        craft1Title: "동작에는 기대와 마무리가 있습니다",
+        craft1Copy: "룰렛 감속, 캡슐 뽑기, 카드 뒤집기는 결과가 나오기 전 짧은 기다림을 만듭니다.",
+        craft2Title: "터치는 누르기만이 아닙니다",
+        craft2Copy: "멀티터치 선택, 스크래치 카드, 카드 조작은 제스처 자체를 경험의 일부로 만듭니다.",
+        craft3Title: "햅틱은 중요한 순간에 맞춥니다",
+        craft3Copy: "확인, 결과 공개, 상태 변화에 Apple 기기 햅틱을 맞춰 피드백을 더 잘 느끼게 합니다.",
+        touchCaption: "멀티터치",
+        touchSmall: "여러 참여자가 함께 화면을 누르면 하이라이트와 피드백으로 결과가 드러납니다.",
+        railDevices: "기기",
+        devicesTitle: "색상, 글자, 방향, 기기까지 실제 사용에 맞춥니다.",
+        devicesLead: "WhichOne은 하나의 이상적인 화면만 전제로 하지 않습니다. iPhone과 iPad, 세로와 가로, 혼자 손에 들고 쓰는 상황과 여러 사람이 둘러보는 상황을 고려합니다.",
+        accessColorTitle: "색약 사용자를 고려한 색상",
+        accessColorCopy: "상태를 색만으로 전달하지 않습니다. 텍스트, 형태, 버튼 모양, 대비가 함께 작동해 핵심 정보를 이해하기 쉽게 합니다.",
+        accessTypeTitle: "2배 글자 크기와 큰 글씨",
+        accessTypeCopy: "중요한 제목, 선택지, 버튼, 결과 피드백은 시스템 글자 크기가 커져도 읽고 누르기 쉽도록 고려했습니다.",
+        accessOrientTitle: "세로, 가로, iPad",
+        accessOrientCopy: "혼자 결정할 때는 iPhone 세로 화면이 자연스럽고, 파티나 그룹 선택은 iPad 또는 가로 레이아웃이 더 적합합니다.",
+        languagesTitle: "언어",
+        languagesCopy: "간체 중국어, 번체 중국어, 일본어, 한국어, 영어를 지원해 상황, 선택지, 결과를 이해하기 쉽게 합니다.",
+        notesTitle: "몇 가지 경계.",
+        notesLead: "WhichOne은 일상의 가벼운 결정과 그룹 상호작용을 위한 앱이며, 고위험 전문 판단용이 아닙니다.",
+        noteUseStrong: "사용 범위:",
+        noteUse: "음식, 장소, 활동, 누가 먼저 할지, 그룹 나누기 같은 낮은 위험의 선택에 적합합니다. 금융, 의료, 법률 판단용이 아닙니다.",
+        noteRandomStrong: "랜덤과 재미:",
+        noteRandom: "미래를 예측하지 않으며 실제 현금 베팅, 현금 보상, 도박 기능을 포함하지 않습니다.",
+        noteDataStrong: "데이터와 구매:",
+        noteData: "사용자 선택지, 최근 결과, 기록은 주로 기기 안에 저장됩니다. 선택적 인앱 구매로 광고를 제거할 수 있습니다.",
+        privacy: "개인정보 처리방침",
+        terms: "이용 약관",
+        footerTagline: "작은 운에 선택을 맡겨보세요.",
+        footerCopy: "이 페이지는 앱 기능, 디자인, 사용 장면을 소개하며 App Store 메타데이터, 개인정보 문서, 앱 내 설명을 대체하지 않습니다."
+      },
+      "zh-Hans": {
+        docTitle: "WhichOne - 把选择交给一点点好运气",
+        backTop: "回到顶部",
+        brandTop: "返回顶部",
+        navOrigin: "初衷",
+        navScenes: "场景",
+        navGames: "玩法",
+        navDesign: "设计",
+        navCraft: "交互",
+        navDevices: "设备",
+        navNotes: "说明",
+        heroKicker: "For life's little decisions",
+        heroTitle: "把选择交给一点点好运气。",
+        heroLead: "WhichOne 为那些“不重要到需要认真分析，却又真实卡住你”的小选择而做。吃什么、去哪儿、做什么、谁先来，用户可以把选项放进一个轻松的游戏里，让结果自然地出现。",
+        pillSolo: "单人决策",
+        pillScenes: "内置生活场景",
+        pillParty: "多人派对玩法",
+        pillDevices: "iPhone / iPad",
+        pillLanguages: "多语言",
+        railOrigin: "初衷",
+        originLine1: "很多选择真正消耗人的地方，并不是选项有多复杂，而是它们都差不多。",
+        originLine2: "WhichOne 把这种无谓的犹豫变成一个有仪式感的小动作：轻点一下、转一下、刮一下，结果出现，事情继续往前走。",
+        originLine3: "它更像一个温和的决定助手，而不是效率工具。它保留随机的轻松，也让过程有视觉、触摸和反馈，用户才会愿意把这些小选择交给它。",
+        originCardTitle: "处理生活里的小摩擦。",
+        originCardCopy: "几个人都说“随便”，菜单翻了很久，周末计划迟迟定不下来。WhichOne 关注的就是这些真实、轻微、但每天都会出现的停顿。",
+        railScenes: "场景",
+        scenesTitle: "选择不是从功能开始，而是从一句“要不随便吧”开始。",
+        scenesLead: "用户打开应用时，常常已经带着一个具体问题。WhichOne 把高频场景提前整理好，让用户不必先想一套选项，马上就能进入选择。",
+        sceneFoodCaption: "吃什么",
+        sceneFoodTitle: "先让晚饭动起来。",
+        sceneFoodCopy: "晚饭、外卖、聚餐前，最难的往往不是没有选择，而是每个人都可以。WhichOne 用预设选项降低开始成本，用户也可以按偏好调整。",
+        sceneFoodPoint1: "预设餐食选项，打开后不用从零输入。",
+        sceneFoodPoint2: "适合朋友聚餐、外卖选择和工作日晚饭。",
+        sceneTravelCaption: "去哪儿",
+        sceneTravelTitle: "给临时出门一个方向。",
+        sceneTravelCopy: "周末、旅行或临时出门没有明确目标时，随机结果不是替用户规划路线，而是帮计划先迈出第一步。",
+        sceneTravelPoint1: "适合地点、周边活动和短途计划。",
+        sceneTravelPoint2: "结果只给方向，用户仍然保留最后决定权。",
+        sceneActivityCaption: "做什么",
+        sceneActivityTitle: "把空闲时间变成一次小抽签。",
+        sceneActivityCopy: "看电影、散步、做家务、玩游戏，都可以被放进一次轻松选择里。结果出来后，用户更容易继续行动。",
+        sceneActivityPoint1: "适合休闲活动、家庭互动和个人待办。",
+        sceneActivityPoint2: "让“都行”变成一个可以执行的小结果。",
+        railGames: "游戏玩法",
+        gamesTitle: "随机结果需要一个好玩的过程。",
+        gamesCopy1: "如果只是给出一个答案，体验会很薄。WhichOne 把结果藏在不同的小玩法里：答案之书的翻页、硬币的正反、扭蛋机的抽取、大转盘的减速、刮刮乐的揭晓，都让随机变得可看、可摸、可期待。",
+        gamesCopy2: "多人模式则把屏幕变成一个共享的现场。按手指、转酒瓶、翻卡抽炸弹、扭蛋机等玩法，让参与者一起等待结果，而不是由某个人独自宣布。",
+        soloCaption: "单人游戏",
+        soloSmall: "从选项中抽出一个结果，并保留结果历史。",
+        partyCaption: "派对游戏",
+        partySmall: "翻卡抽炸弹适合多人围在同一台设备前互动。",
+        railDesign: "视觉",
+        designTitle: "明亮，但不是吵闹；可爱，但不幼稚。",
+        designCopy1: "高明度黄色让“做决定”这件事显得轻一点。黑色承担文字、按钮和黑猫形象的识别，形成稳定锚点。珊瑚红、草绿色和粉色只做点到为止的辅助，让不同场景和结果反馈更有层次。",
+        designCopy2: "黑猫不是单纯装饰，它让应用有一个陪伴者的气质：有点调皮，像在旁边说“别纠结了，试试看”。",
+        railCraft: "交互",
+        craftTitle: "细腻的反馈，让结果更有分量。",
+        craftLead: "随机类应用容易做得很轻飘。WhichOne 在触摸反馈、物理运动和系统震动上做了更细的处理，让每一种游戏都有自己的节奏，而不是所有玩法都像同一个按钮换皮。",
+        craft1Title: "动作有前奏，也有收束",
+        craft1Copy: "转盘减速、扭蛋抽取、卡牌翻开，都给用户一个等待结果的过程。",
+        craft2Title: "触摸不是只负责点击",
+        craft2Copy: "多人按手指、刮刮乐和卡牌玩法都让手势成为体验的一部分。",
+        craft3Title: "震动反馈对应关键瞬间",
+        craft3Copy: "操作确认、结果出现和游戏状态变化，都通过 Apple 设备触感反馈加强可感知性。",
+        touchCaption: "多人触摸",
+        touchSmall: "多个参与者同时按住屏幕，结果通过高亮和反馈自然出现。",
+        railDevices: "设备",
+        devicesTitle: "从颜色、字体到横竖屏，都为真实使用场合做适配。",
+        devicesLead: "WhichOne 的界面不是只在一种理想尺寸下成立。它同时考虑 iPhone 与 iPad、横屏与竖屏、多人围坐与单人手持，也尽量让色彩、字号和反馈对更多用户保持清楚。",
+        accessColorTitle: "色弱友好的色彩策略",
+        accessColorCopy: "明黄色、黑色和辅助色并不只靠颜色本身区分状态，还结合文字、图形、按钮形态和对比度，让色弱用户也能理解主要信息。",
+        accessTypeTitle: "2 倍字号与大字体",
+        accessTypeCopy: "关键标题、选项、按钮和结果反馈都考虑更大字体显示。即使系统字体放大到 2 倍，核心流程仍尽量保持可读、可点、可完成。",
+        accessOrientTitle: "横竖屏与 iPad",
+        accessOrientCopy: "单人快速选择更适合 iPhone 竖屏；多人派对、围坐互动和分组场景则更适合 iPad 或横屏展示。",
+        languagesTitle: "多语言",
+        languagesCopy: "覆盖简体中文、繁体中文、日语、韩语和英语，让不同地区用户都能直接理解场景、选项和结果。",
+        notesTitle: "一些边界说明。",
+        notesLead: "WhichOne 的定位是日常轻量决策和多人互动，不用于高风险专业判断。",
+        noteUseStrong: "用途边界：",
+        noteUse: "适合吃什么、去哪儿、做什么、谁先来、如何分组等低风险场景；不用于金融、医疗、法律等专业决策。",
+        noteRandomStrong: "随机与娱乐：",
+        noteRandom: "应用不承诺预测未来，不包含真钱下注、现金奖励或博彩机制。",
+        noteDataStrong: "数据与内购：",
+        noteData: "用户选项、最近选择和历史记录主要保存在设备本地；可选内购用于移除广告。",
+        privacy: "隐私协议",
+        terms: "使用条款",
+        footerTagline: "把选择交给一点点好运气。",
+        footerCopy: "本页面用于介绍应用功能、设计与使用场景，不替代 App Store 元数据、隐私政策或应用内正式说明。"
+      },
+      "zh-Hant": {
+        docTitle: "WhichOne - 把選擇交給一點點好運氣",
+        backTop: "回到頂部",
+        brandTop: "返回頂部",
+        navOrigin: "初衷",
+        navScenes: "場景",
+        navGames: "玩法",
+        navDesign: "設計",
+        navCraft: "互動",
+        navDevices: "裝置",
+        navNotes: "說明",
+        heroKicker: "For life's little decisions",
+        heroTitle: "把選擇交給一點點好運氣。",
+        heroLead: "WhichOne 為那些「不重要到需要認真分析，卻又真實卡住你」的小選擇而做。吃什麼、去哪兒、做什麼、誰先來，使用者可以把選項放進一個輕鬆的遊戲裡，讓結果自然出現。",
+        pillSolo: "單人決策",
+        pillScenes: "內建生活場景",
+        pillParty: "多人派對玩法",
+        pillDevices: "iPhone / iPad",
+        pillLanguages: "多語言",
+        railOrigin: "初衷",
+        originLine1: "很多選擇真正消耗人的地方，並不是選項有多複雜，而是它們都差不多。",
+        originLine2: "WhichOne 把這種無謂的猶豫變成一個有儀式感的小動作：輕點一下、轉一下、刮一下，結果出現，事情繼續往前走。",
+        originLine3: "它更像一個溫和的決定助手，而不是效率工具。它保留隨機的輕鬆，也讓過程有視覺、觸摸和回饋，使用者才會願意把這些小選擇交給它。",
+        originCardTitle: "處理生活裡的小摩擦。",
+        originCardCopy: "幾個人都說「隨便」，菜單翻了很久，週末計畫遲遲定不下來。WhichOne 關注的就是這些真實、輕微、但每天都會出現的停頓。",
+        railScenes: "場景",
+        scenesTitle: "選擇不是從功能開始，而是從一句「要不隨便吧」開始。",
+        scenesLead: "使用者打開應用時，常常已經帶著一個具體問題。WhichOne 把高頻場景提前整理好，讓使用者不必先想一套選項，馬上就能進入選擇。",
+        sceneFoodCaption: "吃什麼",
+        sceneFoodTitle: "先讓晚飯動起來。",
+        sceneFoodCopy: "晚飯、外賣、聚餐前，最難的往往不是沒有選擇，而是每個人都可以。WhichOne 用預設選項降低開始成本，使用者也可以按偏好調整。",
+        sceneFoodPoint1: "預設餐食選項，打開後不用從零輸入。",
+        sceneFoodPoint2: "適合朋友聚餐、外賣選擇和工作日晚飯。",
+        sceneTravelCaption: "去哪兒",
+        sceneTravelTitle: "給臨時出門一個方向。",
+        sceneTravelCopy: "週末、旅行或臨時出門沒有明確目標時，隨機結果不是替使用者規劃路線，而是幫計畫先邁出第一步。",
+        sceneTravelPoint1: "適合地點、周邊活動和短途計畫。",
+        sceneTravelPoint2: "結果只給方向，使用者仍然保留最後決定權。",
+        sceneActivityCaption: "做什麼",
+        sceneActivityTitle: "把空閒時間變成一次小抽籤。",
+        sceneActivityCopy: "看電影、散步、做家務、玩遊戲，都可以被放進一次輕鬆選擇裡。結果出來後，使用者更容易繼續行動。",
+        sceneActivityPoint1: "適合休閒活動、家庭互動和個人待辦。",
+        sceneActivityPoint2: "讓「都行」變成一個可以執行的小結果。",
+        railGames: "遊戲玩法",
+        gamesTitle: "隨機結果需要一個好玩的過程。",
+        gamesCopy1: "如果只是給出一個答案，體驗會很薄。WhichOne 把結果藏在不同的小玩法裡：答案之書的翻頁、硬幣的正反、扭蛋機的抽取、大轉盤的減速、刮刮樂的揭曉，都讓隨機變得可看、可摸、可期待。",
+        gamesCopy2: "多人模式則把螢幕變成一個共享的現場。按手指、轉酒瓶、翻卡抽炸彈、扭蛋機等玩法，讓參與者一起等待結果。",
+        soloCaption: "單人遊戲",
+        soloSmall: "從選項中抽出一個結果，並保留結果歷史。",
+        partyCaption: "派對遊戲",
+        partySmall: "翻卡抽炸彈適合多人圍在同一台裝置前互動。",
+        railDesign: "視覺",
+        designTitle: "明亮，但不是吵鬧；可愛，但不幼稚。",
+        designCopy1: "高明度黃色讓「做決定」這件事顯得輕一點。黑色承擔文字、按鈕和黑貓形象的識別，形成穩定錨點。珊瑚紅、草綠色和粉色只做點到為止的輔助。",
+        designCopy2: "黑貓不是單純裝飾，它讓應用有一個陪伴者的氣質：有點調皮，像在旁邊說「別糾結了，試試看」。",
+        railCraft: "互動",
+        craftTitle: "細膩的回饋，讓結果更有分量。",
+        craftLead: "隨機類應用容易做得很輕飄。WhichOne 在觸摸回饋、物理運動和系統震動上做了更細的處理，讓每一種遊戲都有自己的節奏。",
+        craft1Title: "動作有前奏，也有收束",
+        craft1Copy: "轉盤減速、扭蛋抽取、卡牌翻開，都給使用者一個等待結果的過程。",
+        craft2Title: "觸摸不是只負責點擊",
+        craft2Copy: "多人按手指、刮刮樂和卡牌玩法都讓手勢成為體驗的一部分。",
+        craft3Title: "震動回饋對應關鍵瞬間",
+        craft3Copy: "操作確認、結果出現和遊戲狀態變化，都透過 Apple 裝置觸感回饋加強可感知性。",
+        touchCaption: "多人觸摸",
+        touchSmall: "多個參與者同時按住螢幕，結果透過高亮和回饋自然出現。",
+        railDevices: "裝置",
+        devicesTitle: "從顏色、字體到橫豎屏，都為真實使用場合作適配。",
+        devicesLead: "WhichOne 的介面不是只在一種理想尺寸下成立。它同時考慮 iPhone 與 iPad、橫屏與豎屏、多人圍坐與單人手持，也盡量讓色彩、字號和回饋對更多使用者保持清楚。",
+        accessColorTitle: "色弱友好的色彩策略",
+        accessColorCopy: "明黃色、黑色和輔助色並不只靠顏色本身區分狀態，還結合文字、圖形、按鈕形態和對比度，讓色弱使用者也能理解主要資訊。",
+        accessTypeTitle: "2 倍字號與大字體",
+        accessTypeCopy: "關鍵標題、選項、按鈕和結果回饋都考慮更大字體顯示。即使系統字體放大到 2 倍，核心流程仍盡量保持可讀、可點、可完成。",
+        accessOrientTitle: "橫豎屏與 iPad",
+        accessOrientCopy: "單人快速選擇更適合 iPhone 豎屏；多人派對、圍坐互動和分組場景則更適合 iPad 或橫屏展示。",
+        languagesTitle: "多語言",
+        languagesCopy: "覆蓋簡體中文、繁體中文、日語、韓語和英語，讓不同地區使用者都能直接理解場景、選項和結果。",
+        notesTitle: "一些邊界說明。",
+        notesLead: "WhichOne 的定位是日常輕量決策和多人互動，不用於高風險專業判斷。",
+        noteUseStrong: "用途邊界：",
+        noteUse: "適合吃什麼、去哪兒、做什麼、誰先來、如何分組等低風險場景；不用於金融、醫療、法律等專業決策。",
+        noteRandomStrong: "隨機與娛樂：",
+        noteRandom: "應用不承諾預測未來，不包含真錢下注、現金獎勵或博彩機制。",
+        noteDataStrong: "資料與內購：",
+        noteData: "使用者選項、最近選擇和歷史記錄主要保存在裝置本地；可選內購用於移除廣告。",
+        privacy: "隱私協議",
+        terms: "使用條款",
+        footerTagline: "把選擇交給一點點好運氣。",
+        footerCopy: "本頁面用於介紹應用功能、設計與使用場景，不替代 App Store 元資料、隱私政策或應用內正式說明。"
+      }
+    };
+
+    const progress = document.querySelector(".progress");
+    const backTop = document.querySelector(".back-top");
+    const navLinks = Array.from(document.querySelectorAll(".links a"));
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const setLanguage = (lang) => {
+      const dict = translations[lang] || translations.en;
+      document.documentElement.lang = lang;
+      document.title = dict.docTitle;
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.dataset.i18n;
+        if (dict[key]) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach((node) => {
+        const key = node.dataset.i18nAria;
+        if (dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+      document.querySelectorAll(".lang-button").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.lang === lang);
+      });
+    };
+
+    const setActiveLink = (id) => {
+      navLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+      });
+    };
+
+    const updateScrollState = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const amount = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      progress.style.transform = `scaleX(${Math.max(0, Math.min(1, amount))})`;
+      backTop.classList.toggle("is-visible", window.scrollY > 520);
+
+      const buttonY = window.innerHeight - 44;
+      const isOnDarkSection = Array.from(document.querySelectorAll(".dark-section")).some((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= buttonY && rect.bottom >= buttonY;
+      });
+      backTop.classList.toggle("on-dark", isOnDarkSection);
+
+      const readLine = window.scrollY + 150;
+      let current = sections[0];
+      sections.forEach((section) => {
+        if (section.offsetTop <= readLine) current = section;
+      });
+      if (current) setActiveLink(current.id);
+    };
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.16 }
+    );
+
+    document.querySelectorAll("[data-reveal]").forEach((node) => revealObserver.observe(node));
+    document.querySelectorAll(".lang-button").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    });
+
+    updateScrollState();
+    setLanguage("en");
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    backTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
