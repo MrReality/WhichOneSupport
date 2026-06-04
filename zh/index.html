@@ -575,6 +575,110 @@
       margin-top: 54px;
     }
 
+    .feature-strip,
+    .mode-flow,
+    .wide-visual {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--cream);
+      box-shadow: 0 16px 38px rgba(28, 22, 9, 0.09);
+    }
+
+    .feature-strip {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: stretch;
+      padding: 18px;
+    }
+
+    .feature-strip img,
+    .mode-flow img,
+    .wide-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 10px 6px 4px;
+    }
+
+    .feature-copy h3 {
+      margin-top: 8px;
+    }
+
+    .feature-copy p {
+      margin-top: 14px;
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .mode-showcase {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mode-flow {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fdf5dc;
+    }
+
+    .mode-flow img {
+      display: block;
+      object-fit: contain;
+      height: auto;
+      background: #fdf5dc;
+    }
+
+    .mode-flow figcaption,
+    .visual-note {
+      padding: 18px;
+    }
+
+    .mode-flow figcaption {
+      border-top: 1px solid var(--line);
+    }
+
+    .mode-flow figcaption h3,
+    .visual-note h3 {
+      margin-top: 8px;
+    }
+
+    .mode-flow figcaption p,
+    .visual-note p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .wide-visual {
+      margin-top: 18px;
+      padding: 12px;
+    }
+
+    .wide-visual img {
+      display: block;
+      height: auto;
+      border-radius: var(--radius);
+    }
+
+    .chapter > .feature-strip,
+    .chapter > .mode-showcase,
+    .chapter > .visual-note,
+    .chapter > .wide-visual {
+      grid-column: 2;
+    }
+
     .principles {
       display: grid;
       gap: 12px;
@@ -713,6 +817,14 @@
 
     .craft .body-copy {
       color: rgba(255, 255, 255, 0.72);
+    }
+
+    .craft .feature-strip h3 {
+      color: var(--ink);
+    }
+
+    .craft .feature-copy p {
+      color: var(--muted);
     }
 
     .craft-grid {
@@ -982,6 +1094,18 @@
       .craft-grid {
         grid-template-columns: 1fr;
       }
+
+      .feature-strip,
+      .mode-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter > .feature-strip,
+      .chapter > .mode-showcase,
+      .chapter > .visual-note,
+      .chapter > .wide-visual {
+        grid-column: auto;
+      }
     }
 
     @media (max-width: 640px) {
@@ -1106,7 +1230,9 @@
       .scene-row .phone img,
       .duo .phone img,
       .identity-card img,
-      .craft .phone img {
+      .craft .phone img,
+      .feature-strip img,
+      .mode-flow img {
         width: 100%;
         height: auto;
         max-height: none;
@@ -1134,6 +1260,27 @@
       .duo,
       .palette {
         grid-template-columns: 1fr;
+      }
+
+      .feature-strip {
+        padding: 10px;
+      }
+
+      .feature-copy {
+        padding: 6px 4px 2px;
+      }
+
+      .mode-flow figcaption,
+      .visual-note {
+        padding: 14px;
+      }
+
+      .mode-showcase {
+        gap: 12px;
+      }
+
+      .wide-visual {
+        padding: 8px;
       }
 
       .swatch {
@@ -1197,13 +1344,13 @@
         <span>WhichOne</span>
       </a>
       <div class="links">
-        <a href="#origin">初衷</a>
-        <a href="#scenes">场景</a>
-        <a href="#games">玩法</a>
-        <a href="#design">设计</a>
-        <a href="#craft">交互</a>
-        <a href="#devices">设备</a>
-        <a href="#notes">说明</a>
+        <a href="#origin">总览</a>
+        <a href="#design">黑猫 IP</a>
+        <a href="#scenes">选项</a>
+        <a href="#games">模式</a>
+        <a href="#craft">游戏</a>
+        <a href="#devices">体验</a>
+        <a href="#notes">边界</a>
       </div>
     </div>
   </nav>
@@ -1232,80 +1379,68 @@
     <section class="section chapter" id="origin">
       <div class="chapter-rail" data-reveal>
         <span class="number">01</span>
-        <span class="label">Origin</span>
+        <span class="label">Overview</span>
       </div>
       <div class="manifesto">
         <div class="manifesto-text" data-reveal>
           <p>很多选择真正消耗人的地方，并不是选项有多复杂，而是它们都差不多。</p>
-          <p>WhichOne 把这种无谓的犹豫变成一个有仪式感的小动作：轻点一下、转一下、刮一下，结果出现，事情继续往前走。</p>
-          <p class="quiet">它更像一个温和的决定助手，而不是效率工具。它保留随机的轻松，也让过程有视觉、触摸和反馈，用户才会愿意把这些小选择交给它。</p>
+          <p>WhichOne 把这种小小的犹豫变成一个轻松的决策流程：选择场景，让黑猫带着用户进入玩法，揭晓结果，然后继续往前走。</p>
+          <p class="quiet">它面向的是低风险的日常选择：吃什么、去哪儿、做什么、谁先来、怎么分组。目标不是替用户做重大判断，而是让那些每天都会卡住人的小选择更快、更有趣地完成。</p>
         </div>
         <aside class="icon-panel" data-reveal>
           <img src="assets/icon.jpg" alt="WhichOne app icon" />
-          <div class="eyebrow">Design Intent</div>
-          <h3>处理生活里的小摩擦。</h3>
-          <p class="body-copy">几个人都说“随便”，菜单翻了很久，周末计划迟迟定不下来。WhichOne 关注的就是这些真实、轻微、但每天都会出现的停顿。</p>
+          <div class="eyebrow">Decision Companion</div>
+          <h3>处理那些很小、但真的会卡住人的选择。</h3>
+          <p class="body-copy">当每个答案都“也可以”时，WhichOne 给用户一个明确的下一步，而不是继续停在空白里。</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section chapter" id="design">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">02</span>
+        <span class="label">Cat IP</span>
+      </div>
+      <div class="design-board">
+        <div data-reveal>
+          <div class="eyebrow">黑猫 IP</div>
+          <h2>用一个角色贯穿整个决策体验。</h2>
+          <p class="body-copy">黑猫贯穿 WhichOne 的主题、内置选项、小游戏、分组、卡牌、硬币和结果时刻。它让应用不像一组松散工具，而更像一个陪用户做决定的小伙伴。</p>
+          <p class="body-copy">它有点调皮的表情会缓解用户纠结时的僵住感。应用传达的感觉是：别想太久，让黑猫帮你先选一个。</p>
+        </div>
+        <div class="identity-card" data-reveal>
+          <img src="assets/whichOne_home.png" alt="WhichOne home screen" />
+        </div>
+      </div>
+      <div class="wide-visual" data-reveal>
+        <img src="assets/whichOne_cat.png" alt="WhichOne 黑色小猫 IP 系统，覆盖不同主题、玩法、分组和去广告视觉" />
       </div>
     </section>
 
     <section class="interactive" id="scenes">
       <div class="section chapter">
         <div class="chapter-rail" data-reveal>
-          <span class="number">02</span>
-          <span class="label">Scenes</span>
+          <span class="number">03</span>
+          <span class="label">Options</span>
         </div>
         <div>
           <div data-reveal>
-            <div class="eyebrow">Everyday Scenes</div>
-            <h2>选择不是从功能开始，而是从一句“要不随便吧”开始。</h2>
-            <p class="body-copy">用户打开应用时，常常已经带着一个具体问题。WhichOne 把高频场景提前整理好，让用户不必先想一套选项，马上就能进入选择。</p>
+            <div class="eyebrow">Built-in Options</div>
+            <h2>从吃什么、去哪儿、做什么这些高频问题开始。</h2>
+            <p class="body-copy">WhichOne 为餐食、地点和活动准备了内置选项。用户可以根据偏好快速生成候选项，也可以在开始游戏前自由编辑、删除或补充选项。</p>
           </div>
           <div class="scene-stack">
             <article class="scene-row" data-reveal>
-              <figure class="phone">
-                <img src="assets/whichOne_option_food.png" alt="Food choices in WhichOne" />
-                <figcaption>吃什么<small>内置选项帮助用户快速开始一次选择。</small></figcaption>
-              </figure>
-              <div class="scene-copy">
-                <div class="scene-number">Scene 01</div>
-                <h3>先让晚饭动起来。</h3>
-                <p>晚饭、外卖、聚餐前，最难的往往不是没有选择，而是每个人都可以。WhichOne 用预设选项降低开始成本，用户也可以按偏好调整。</p>
-                <ul class="scene-points">
-                  <li>预设餐食选项，打开后不用从零输入。</li>
-                  <li>适合朋友聚餐、外卖选择和工作日晚饭。</li>
-                </ul>
-              </div>
+              <figure class="phone"><img src="assets/whichOne_option_food.png" alt="Food choices in WhichOne" /><figcaption>吃什么</figcaption></figure>
+              <div class="scene-copy"><div class="scene-number">Option Set 01</div><h3>吃什么。</h3><p>餐食选项帮助用户跳过最常见的日常纠结。应用可以先给出一个可用列表，用户再按口味添加、删除或修改。</p><ul class="scene-points"><li>适合晚饭、外卖、聚餐等高频场景。</li><li>选项可编辑，让结果更贴合真实偏好。</li></ul></div>
             </article>
             <article class="scene-row" data-reveal>
-              <figure class="phone">
-                <img src="assets/whichOne_option_travel.png" alt="Travel choices in WhichOne" />
-                <figcaption>去哪儿<small>没有明确目的地时，给行程一个开始。</small></figcaption>
-              </figure>
-              <div class="scene-copy">
-                <div class="scene-number">Scene 02</div>
-                <h3>给临时出门一个方向。</h3>
-                <p>周末、旅行或临时出门没有明确目标时，随机结果不是替用户规划路线，而是帮计划先迈出第一步。</p>
-                <ul class="scene-points">
-                  <li>适合地点、周边活动和短途计划。</li>
-                  <li>结果只给方向，用户仍然保留最后决定权。</li>
-                </ul>
-              </div>
+              <figure class="phone"><img src="assets/whichOne_option_travel.png" alt="Travel choices in WhichOne" /><figcaption>去哪儿</figcaption></figure>
+              <div class="scene-copy"><div class="scene-number">Option Set 02</div><h3>去哪儿。</h3><p>当计划还没有目的地时，应用先给一个方向：附近地点、短途出门、周末安排或旅行候选，都可以成为决策选项。</p><ul class="scene-points"><li>适合周边计划、旅行和周末出门。</li><li>结果给出方向，最后决定权仍在用户手里。</li></ul></div>
             </article>
             <article class="scene-row" data-reveal>
-              <figure class="phone">
-                <img src="assets/whichOne_option_activity.png" alt="Activity choices in WhichOne" />
-                <figcaption>做什么<small>让空闲时间不再卡在“都行”。</small></figcaption>
-              </figure>
-              <div class="scene-copy">
-                <div class="scene-number">Scene 03</div>
-                <h3>把空闲时间变成一次小抽签。</h3>
-                <p>看电影、散步、做家务、玩游戏，都可以被放进一次轻松选择里。结果出来后，用户更容易继续行动。</p>
-                <ul class="scene-points">
-                  <li>适合休闲活动、家庭互动和个人待办。</li>
-                  <li>让“都行”变成一个可以执行的小结果。</li>
-                </ul>
-              </div>
+              <figure class="phone"><img src="assets/whichOne_option_activity.png" alt="Activity choices in WhichOne" /><figcaption>做什么</figcaption></figure>
+              <div class="scene-copy"><div class="scene-number">Option Set 03</div><h3>做什么。</h3><p>休闲、家务、家庭互动和个人待办都可以变成一次轻松抽签。生成列表带来行动起点，编辑能力保留个人偏好。</p><ul class="scene-points"><li>适合空闲时间、家庭活动和小任务。</li><li>让“都行”变成一个可以执行的小结果。</li></ul></div>
             </article>
           </div>
         </div>
@@ -1313,158 +1448,51 @@
     </section>
 
     <section class="section chapter" id="games">
-      <div class="chapter-rail" data-reveal>
-        <span class="number">03</span>
-        <span class="label">Game Modes</span>
-      </div>
+      <div class="chapter-rail" data-reveal><span class="number">04</span><span class="label">Modes</span></div>
       <div class="split">
-        <div data-reveal>
-          <div class="eyebrow">Game Modes</div>
-          <h2>随机结果需要一个好玩的过程。</h2>
-          <p class="body-copy">如果只是给出一个答案，体验会很薄。WhichOne 把结果藏在不同的小玩法里：答案之书的翻页、硬币的正反、扭蛋机的抽取、大转盘的减速、刮刮乐的揭晓，都让“随机”变得可看、可摸、可期待。</p>
-          <p class="body-copy">多人模式则把屏幕变成一个共享的现场。按手指、转酒瓶、翻卡抽炸弹、扭蛋机等玩法，让参与者一起等待结果，而不是由某个人独自宣布。</p>
-        </div>
+        <div data-reveal><div class="eyebrow">Solo & Party</div><h2>单人模式和派对模式覆盖两类决策场景。</h2><p class="body-copy">单人模式用于一个人自己的小选择：选择主题、编辑选项、揭晓结果，并保留历史方便再次游玩。</p><p class="body-copy">派对模式把决策变成多人共享的现场：可以抽一个人、围着一台设备一起玩，也可以录入参与者后进行分组。</p></div>
         <div class="duo" data-reveal>
-          <figure class="phone">
-            <img src="assets/whichOne_single_game.png" alt="Single player gacha game in WhichOne" />
-            <figcaption>单人游戏<small>从选项中抽出一个结果，并保留结果历史。</small></figcaption>
-          </figure>
-          <figure class="phone">
-            <img src="assets/whichOne_party_game.png" alt="Party card bomb game in WhichOne" />
-            <figcaption>派对游戏<small>翻卡抽炸弹适合多人围在同一台设备前互动。</small></figcaption>
-          </figure>
+          <figure class="phone"><img src="assets/whichOne_single_game.png" alt="Single player gacha game in WhichOne" /><figcaption>单人游戏<small>从选项中抽出一个结果，并保留结果历史。</small></figcaption></figure>
+          <figure class="phone"><img src="assets/whichOne_party_game.png" alt="Party card bomb game in WhichOne" /><figcaption>派对游戏<small>适合多人围在同一台设备前互动。</small></figcaption></figure>
         </div>
       </div>
-    </section>
-
-    <section class="section chapter" id="design">
-      <div class="chapter-rail" data-reveal>
-        <span class="number">04</span>
-        <span class="label">Visual</span>
-      </div>
-      <div class="design-board">
-        <div data-reveal>
-          <div class="eyebrow">Visual Language</div>
-          <h2>明亮，但不是吵闹；可爱，但不幼稚。</h2>
-          <p class="body-copy">高明度黄色让“做决定”这件事显得轻一点。黑色承担文字、按钮和黑猫形象的识别，形成稳定锚点。珊瑚红、草绿色和粉色只做点到为止的辅助，让不同场景和结果反馈更有层次。</p>
-          <p class="body-copy">黑猫不是单纯装饰，它让应用有一个陪伴者的气质：有点调皮，像在旁边说“别纠结了，试试看”。这种性格能缓解用户面对选择时的僵住感。</p>
-          <div class="palette" aria-label="WhichOne color palette">
-            <div class="swatch sun">Yellow<span>light, decisive</span></div>
-            <div class="swatch black">Black<span>contrast, focus</span></div>
-            <div class="swatch coral">Coral<span>action, result</span></div>
-            <div class="swatch leaf">Green<span>balance, calm</span></div>
-            <div class="swatch rose">Pink<span>play, warmth</span></div>
-          </div>
-        </div>
-        <div class="identity-card" data-reveal>
-          <img src="assets/whichOne_home.png" alt="WhichOne home screen" />
-        </div>
+      <div class="mode-showcase" data-reveal>
+        <figure class="mode-flow"><img src="assets/whichOne_soloMode.png" alt="WhichOne 单人模式流程" /><figcaption><div class="eyebrow">单人模式</div><h3>处理一个人自己的小选择。</h3><p>从预设场景或自定义主题开始，输入选项后由匹配的小游戏揭晓结果，再保存或分享答案。它让私人的日常选择足够快，也不显得单薄。</p></figcaption></figure>
+        <figure class="mode-flow"><img src="assets/whichOne_partyMode.png" alt="WhichOne 派对模式流程" /><figcaption><div class="eyebrow">派对模式</div><h3>处理属于一群人的选择。</h3><p>想马上玩时可以直接开始；需要参与者时，也可以录入名单，用来抽一个人或分组。结果不再是某个人宣布，而是围着同一台设备一起等待。</p></figcaption></figure>
       </div>
     </section>
 
     <section class="craft" id="craft">
       <div class="section chapter">
-        <div class="chapter-rail" data-reveal>
-          <span class="number">05</span>
-          <span class="label">Craft</span>
-        </div>
+        <div class="chapter-rail" data-reveal><span class="number">05</span><span class="label">Games</span></div>
         <div>
-          <div class="split">
-            <div data-reveal>
-              <div class="eyebrow">Interaction Craft</div>
-              <h2>细腻的反馈，让结果更有分量。</h2>
-              <p class="body-copy">随机类应用容易做得很轻飘。WhichOne 在触摸反馈、物理运动和系统震动上做了更细的处理，让每一种游戏都有自己的节奏，而不是所有玩法都像同一个按钮换皮。</p>
-              <div class="craft-grid" data-reveal>
-                <article class="craft-card">
-                  <div class="mark">01</div>
-                  <div>
-                    <h3>动作有前奏，也有收束</h3>
-                    <p>转盘减速、扭蛋抽取、卡牌翻开，都给用户一个等待结果的过程。</p>
-                  </div>
-                </article>
-                <article class="craft-card">
-                  <div class="mark">02</div>
-                  <div>
-                    <h3>触摸不是只负责点击</h3>
-                    <p>多人按手指、刮刮乐和卡牌玩法都让手势成为体验的一部分。</p>
-                  </div>
-                </article>
-                <article class="craft-card">
-                  <div class="mark">03</div>
-                  <div>
-                    <h3>震动反馈对应关键瞬间</h3>
-                    <p>操作确认、结果出现和游戏状态变化，都通过 Apple 设备触感反馈加强可感知性。</p>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <figure class="phone" data-reveal>
-              <img src="assets/whichOne_party_game2.png" alt="Multi-touch party mode in WhichOne" />
-              <figcaption>多人触摸<small>多个参与者同时按住屏幕，结果通过高亮和反馈自然出现。</small></figcaption>
-            </figure>
+          <div data-reveal><div class="eyebrow">Game Library</div><h2>一组足够精致的决策小游戏。</h2><p class="body-copy">WhichOne 不是把同一个随机器换几套名字。转盘、卡牌、扭蛋、硬币、答案之书、骰子和派对工具会给选择不同的节奏，让反复使用也保持新鲜。</p></div>
+          <div class="feature-strip" data-reveal><img src="assets/whichOne_game.png" alt="WhichOne 丰富游戏玩法总览" /><div class="feature-copy"><div class="eyebrow">不只是随机</div><h3>游戏感让结果更容易被接受。</h3><p>应用不会立刻丢出一个答案，而是让用户看到转盘减速、卡牌翻开、扭蛋抽取、刮开结果或等待一次小揭晓。</p></div></div>
+          <div class="craft-grid" data-reveal>
+            <article class="craft-card"><div class="mark">01</div><div><h3>玩法多，重复感少</h3><p>不同的游戏形式让高频决策不总像按同一个按钮。</p></div></article>
+            <article class="craft-card"><div class="mark">02</div><div><h3>手势也是答案的一部分</h3><p>转、刮、翻、点、多人触摸，都让决策过程更有参与感。</p></div></article>
+            <article class="craft-card"><div class="mark">03</div><div><h3>短暂等待让结果更有分量</h3><p>期待感会让随机答案更像一次小事件，尤其适合派对场景。</p></div></article>
           </div>
         </div>
       </div>
     </section>
 
     <section class="section chapter" id="devices">
-      <div class="chapter-rail" data-reveal>
-        <span class="number">06</span>
-        <span class="label">Devices</span>
-      </div>
-      <div data-reveal>
-        <div class="eyebrow">Accessibility & Devices</div>
-        <h2>从颜色、字体到横竖屏，都为真实使用场合做适配。</h2>
-        <p class="body-copy">WhichOne 的界面不是只在一种理想尺寸下成立。它同时考虑 iPhone 与 iPad、横屏与竖屏、多人围坐与单人手持，也尽量让色彩、字号和反馈对更多用户保持清楚。</p>
-        <div class="device-grid">
-          <div class="device-main">
-            <img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" />
-          </div>
-          <div class="device-side">
-            <div class="device-item">
-              <h3>色弱友好的色彩策略</h3>
-              <p>明黄色、黑色和辅助色并不只靠颜色本身区分状态，还结合文字、图形、按钮形态和对比度，让色弱用户也能理解主要信息。</p>
-            </div>
-            <div class="device-item">
-              <h3>2 倍字号与大字体</h3>
-              <p>关键标题、选项、按钮和结果反馈都考虑更大字体显示。即使系统字体放大到 2 倍，核心流程仍尽量保持可读、可点、可完成。</p>
-            </div>
-            <div class="device-item">
-              <h3>横竖屏与 iPad</h3>
-              <p>单人快速选择更适合 iPhone 竖屏；多人派对、围坐互动和分组场景则更适合 iPad 或横屏展示。布局会根据方向调整重点。</p>
-            </div>
-            <div class="device-item">
-              <h3>多语言</h3>
-              <p>覆盖简体中文、繁体中文、日语、韩语和英语，让不同地区用户都能直接理解场景、选项和结果。</p>
-              <div class="language-list" aria-label="Supported languages">
-                <span class="language">简体中文</span>
-                <span class="language">繁體中文</span>
-                <span class="language">日本語</span>
-                <span class="language">한국어</span>
-                <span class="language">English</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="chapter-rail" data-reveal><span class="number">06</span><span class="label">Care</span></div>
+      <div data-reveal><div class="eyebrow">Visual & Accessibility</div><h2>明亮色系、清晰反馈和实用的辅助体验。</h2><p class="body-copy">WhichOne 使用高明度黄色、强黑色对比、活泼辅助色、震动反馈和大字体支持，让体验保持清楚、可点、可感知。</p>
+        <div class="device-grid"><div class="device-main"><img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" /></div><div class="device-side">
+          <div class="device-item"><h3>温暖黄色与黑色对比</h3><p>黄色让应用轻快，黑色承担文字、按钮和黑猫识别。辅助色用于场景和结果反馈，但不会只靠颜色传递关键信息。</p></div>
+          <div class="device-item"><h3>震动反馈</h3><p>操作确认、结果出现和状态变化会配合 Apple 设备触感反馈，让关键瞬间更容易被感知。</p></div>
+          <div class="device-item"><h3>2 倍字号与大字体</h3><p>关键标题、选项、按钮和结果反馈都考虑更大字体显示。即使系统字体放大到 2 倍，核心流程仍尽量保持可读、可点、可完成。</p></div>
+          <div class="device-item"><h3>多语言与设备布局</h3><p>覆盖简体中文、繁体中文、日语、韩语和英语，也考虑 iPhone、iPad、横屏、竖屏下的单人和多人使用。</p><div class="language-list" aria-label="Supported languages"><span class="language">简体中文</span><span class="language">繁體中文</span><span class="language">日本語</span><span class="language">한국어</span><span class="language">English</span></div></div>
+        </div></div>
       </div>
     </section>
 
     <section class="section" id="notes">
       <div class="notes" data-reveal>
-        <div>
-          <div class="eyebrow">Product Notes</div>
-          <h2>一些边界说明。</h2>
-          <p class="body-copy">WhichOne 的定位是日常轻量决策和多人互动，不用于高风险专业判断。</p>
-        </div>
-        <div class="note-list">
-          <p><strong>用途边界：</strong>适合吃什么、去哪儿、做什么、谁先来、如何分组等低风险场景；不用于金融、医疗、法律等专业决策。</p>
-          <p><strong>随机与娱乐：</strong>应用不承诺预测未来，不包含真钱下注、现金奖励或博彩机制。</p>
-          <p><strong>数据与内购：</strong>用户选项、最近选择和历史记录主要保存在设备本地；可选内购用于移除广告。</p>
-          <div class="legal-links" aria-label="法律与隐私链接">
-            <a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_privacy_policy_global.html" target="_blank" rel="noopener noreferrer">隐私协议</a>
-            <a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_terms_global.html" target="_blank" rel="noopener noreferrer">使用条款</a>
-          </div>
-        </div>
+        <div><div class="eyebrow">Product Notes</div><h2>一些边界说明。</h2><p class="body-copy">WhichOne 的定位是日常轻量决策和多人互动，不用于高风险专业判断。</p></div>
+        <div class="note-list"><p><strong>用途边界：</strong>适合吃什么、去哪儿、做什么、谁先来、如何分组等低风险场景；不用于金融、医疗、法律等专业决策。</p><p><strong>随机与娱乐：</strong>应用不承诺预测未来，不包含真钱下注、现金奖励或博彩机制。</p><p><strong>数据与内购：</strong>用户选项、最近选择和历史记录主要保存在设备本地；可选内购用于移除广告。</p><div class="legal-links" aria-label="法律与隐私链接"><a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_privacy_policy_global.html" target="_blank" rel="noopener noreferrer">隐私协议</a><a class="legal-link" href="https://mrreality.github.io/WhichOneSupport/whichone_terms_global.html" target="_blank" rel="noopener noreferrer">使用条款</a></div></div>
       </div>
     </section>
   </main>

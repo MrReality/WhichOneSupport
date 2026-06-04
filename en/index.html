@@ -395,6 +395,8 @@
     .dark-section .body-copy { color: rgba(255, 255, 255, 0.72); }
     .dark-section .chapter-rail { color: rgba(255, 255, 255, 0.54); }
     .dark-section .chapter-rail .number { color: #fff; }
+    .dark-section .feature-strip h3 { color: var(--ink); }
+    .dark-section .feature-copy p { color: var(--muted); }
 
     .scene-stack {
       display: grid;
@@ -508,6 +510,108 @@
     }
 
     .duo .phone:nth-child(2) { margin-top: 54px; }
+
+    .feature-strip,
+    .mode-flow,
+    .wide-visual {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--cream);
+      box-shadow: 0 16px 38px rgba(28, 22, 9, 0.09);
+    }
+
+    .feature-strip {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: stretch;
+      padding: 18px;
+    }
+
+    .feature-strip img,
+    .mode-flow img,
+    .wide-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 10px 6px 4px;
+    }
+
+    .feature-copy h3 { margin-top: 8px; }
+
+    .feature-copy p {
+      margin-top: 14px;
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .mode-showcase {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mode-flow {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fdf5dc;
+    }
+
+    .mode-flow img {
+      display: block;
+      object-fit: contain;
+      height: auto;
+      background: #fdf5dc;
+    }
+
+    .mode-flow figcaption,
+    .visual-note {
+      padding: 18px;
+    }
+
+    .mode-flow figcaption {
+      border-top: 1px solid var(--line);
+    }
+
+    .mode-flow figcaption h3,
+    .visual-note h3 {
+      margin-top: 8px;
+    }
+
+    .mode-flow figcaption p,
+    .visual-note p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-weight: 560;
+    }
+
+    .wide-visual {
+      margin-top: 18px;
+      padding: 12px;
+    }
+
+    .wide-visual img {
+      display: block;
+      height: auto;
+      border-radius: var(--radius);
+    }
+
+    .chapter > .feature-strip,
+    .chapter > .mode-showcase,
+    .chapter > .visual-note,
+    .chapter > .wide-visual {
+      grid-column: 2;
+    }
 
     .design-board {
       display: grid;
@@ -752,6 +856,17 @@
       .duo .phone:nth-child(2) { margin-top: 0; }
       .identity-card, .craft .phone { max-width: none; justify-self: stretch; }
       .craft .split { grid-template-columns: 1fr; }
+      .feature-strip,
+      .mode-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter > .feature-strip,
+      .chapter > .mode-showcase,
+      .chapter > .visual-note,
+      .chapter > .wide-visual {
+        grid-column: auto;
+      }
     }
 
     @media (max-width: 640px) {
@@ -820,7 +935,9 @@
       .scene-row .phone img,
       .duo .phone img,
       .identity-card img,
-      .craft .phone img {
+      .craft .phone img,
+      .feature-strip img,
+      .mode-flow img {
         width: 100%;
         height: auto;
         max-height: none;
@@ -833,6 +950,12 @@
       .phone img { border-radius: 9px; }
       .phone figcaption { padding: 10px 4px 3px; }
       .duo, .palette { grid-template-columns: 1fr; }
+      .feature-strip { padding: 10px; }
+      .feature-copy { padding: 6px 4px 2px; }
+      .mode-flow figcaption,
+      .visual-note { padding: 14px; }
+      .mode-showcase { gap: 12px; }
+      .wide-visual { padding: 8px; }
       .swatch { min-height: 88px; }
       .identity-card { padding: 10px; }
       .craft-card { grid-template-columns: 38px 1fr; padding: 14px; }
@@ -864,9 +987,9 @@
       <div class="nav-right">
         <div class="links">
           <a href="#origin" data-i18n="navOrigin">Origin</a>
+          <a href="#design" data-i18n="navDesign">Design</a>
           <a href="#scenes" data-i18n="navScenes">Scenes</a>
           <a href="#games" data-i18n="navGames">Modes</a>
-          <a href="#design" data-i18n="navDesign">Design</a>
           <a href="#craft" data-i18n="navCraft">Craft</a>
           <a href="#devices" data-i18n="navDevices">Devices</a>
           <a href="#notes" data-i18n="navNotes">Notes</a>
@@ -906,34 +1029,55 @@
     <section class="section chapter" id="origin">
       <div class="chapter-rail" data-reveal>
         <span class="number">01</span>
-        <span class="label" data-i18n="railOrigin">Origin</span>
+        <span class="label" data-i18n="railOrigin">Overview</span>
       </div>
       <div class="manifesto">
         <div class="manifesto-text" data-reveal>
           <p data-i18n="originLine1">Many decisions feel tiring not because the options are complex, but because they are almost equally fine.</p>
-          <p data-i18n="originLine2">WhichOne turns that small hesitation into a tiny ritual: tap, spin, scratch, reveal, and move on.</p>
-          <p class="quiet" data-i18n="originLine3">It is closer to a gentle decision companion than a productivity tool. It keeps randomness light, then adds visual, tactile, and haptic feedback so the process feels worth handing over.</p>
+          <p data-i18n="originLine2">WhichOne turns that small hesitation into a light decision ritual: choose a scene, let the black cat guide the process, reveal a result, and move on.</p>
+          <p class="quiet" data-i18n="originLine3">The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who goes first, or how a group should split. It keeps the decision quick while making the moment feel playful.</p>
         </div>
         <aside class="icon-panel" data-reveal>
           <img src="assets/icon.jpg" alt="WhichOne app icon" />
-          <div class="eyebrow">Design Intent</div>
-          <h3 data-i18n="originCardTitle">Made for tiny everyday friction.</h3>
-          <p class="body-copy" data-i18n="originCardCopy">When everyone says “anything,” when the menu takes too long, or when a weekend plan stalls, WhichOne gives that moment a playful way forward.</p>
+          <div class="eyebrow">Decision Companion</div>
+          <h3 data-i18n="originCardTitle">For choices that are small, but still sticky.</h3>
+          <p class="body-copy" data-i18n="originCardCopy">When every answer is acceptable, WhichOne gives the user a clear next step instead of another blank moment.</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section chapter" id="design">
+      <div class="chapter-rail" data-reveal>
+        <span class="number">02</span>
+        <span class="label" data-i18n="railDesign">Cat IP</span>
+      </div>
+      <div class="design-board">
+        <div data-reveal>
+          <div class="eyebrow" data-i18n="catIpEyebrow">Black Cat IP</div>
+          <h2 data-i18n="catIpTitle">One character carries the whole decision experience.</h2>
+          <p class="body-copy" data-i18n="catIpCopy">The black cat runs through WhichOne: topics, built-in options, mini games, team splitting, cards, coins, and result moments. That repeated presence makes the app feel like a companion, not just a utility.</p>
+          <p class="body-copy" data-i18n="designCopy2">Its mischievous expression softens hesitation. The app is essentially saying: stop overthinking, let the cat help you pick one.</p>
+        </div>
+        <div class="identity-card" data-reveal>
+          <img src="assets/whichOne_home.png" alt="WhichOne home screen" />
+        </div>
+      </div>
+      <div class="wide-visual" data-reveal>
+        <img src="assets/whichOne_cat.png" alt="WhichOne black cat IP system across topics, games, team splitting, cards, coins, and remove-ads visuals" />
       </div>
     </section>
 
     <section class="dark-section interactive" id="scenes">
       <div class="section chapter">
         <div class="chapter-rail" data-reveal>
-          <span class="number">02</span>
-          <span class="label" data-i18n="railScenes">Scenes</span>
+          <span class="number">03</span>
+          <span class="label" data-i18n="railScenes">Options</span>
         </div>
         <div>
           <div data-reveal>
-            <div class="eyebrow">Everyday Scenes</div>
-            <h2 data-i18n="scenesTitle">Start with a real question, not a blank form.</h2>
-            <p class="body-copy" data-i18n="scenesLead">People often open the app with a specific question already in mind. WhichOne prepares common scenarios so users can begin without inventing a list first.</p>
+            <div class="eyebrow">Built-in Options</div>
+            <h2 data-i18n="scenesTitle">Start from common questions: eat, go, do.</h2>
+            <p class="body-copy" data-i18n="scenesLead">WhichOne prepares option sets for food, places, and activities. Users can quickly generate choices based on preference, then edit the options freely before starting a decision game.</p>
           </div>
           <div class="scene-stack">
             <article class="scene-row" data-reveal>
@@ -942,12 +1086,12 @@
                 <figcaption data-i18n="sceneFoodCaption">What to eat</figcaption>
               </figure>
               <div class="scene-copy">
-                <div class="scene-number">Scene 01</div>
-                <h3 data-i18n="sceneFoodTitle">Get dinner moving.</h3>
-                <p data-i18n="sceneFoodCopy">For dinner, takeout, or a meal with friends, the hard part is often that every option is acceptable. Built-in food choices lower the starting cost and can still be adjusted to taste.</p>
+                <div class="scene-number">Option Set 01</div>
+                <h3 data-i18n="sceneFoodTitle">What to eat.</h3>
+                <p data-i18n="sceneFoodCopy">Food choices help users move past the most common daily question. The app can provide a useful starting list, while users can still add, delete, or rewrite options to match taste.</p>
                 <ul class="scene-points">
-                  <li data-i18n="sceneFoodPoint1">Preset food options reduce blank-page work.</li>
-                  <li data-i18n="sceneFoodPoint2">Useful for group meals, takeout, and weekday dinners.</li>
+                  <li data-i18n="sceneFoodPoint1">Quickly starts dinner, takeout, and group meal decisions.</li>
+                  <li data-i18n="sceneFoodPoint2">Editable options keep the result aligned with real preference.</li>
                 </ul>
               </div>
             </article>
@@ -957,11 +1101,11 @@
                 <figcaption data-i18n="sceneTravelCaption">Where to go</figcaption>
               </figure>
               <div class="scene-copy">
-                <div class="scene-number">Scene 02</div>
-                <h3 data-i18n="sceneTravelTitle">Give an outing a direction.</h3>
-                <p data-i18n="sceneTravelCopy">When a weekend, trip, or quick outing has no clear destination, a random result does not replace planning; it simply gives the plan a first step.</p>
+                <div class="scene-number">Option Set 02</div>
+                <h3 data-i18n="sceneTravelTitle">Where to go.</h3>
+                <p data-i18n="sceneTravelCopy">When the plan has no destination yet, the app gives users a direction first: nearby places, short outings, weekend ideas, or travel candidates can all become decision options.</p>
                 <ul class="scene-points">
-                  <li data-i18n="sceneTravelPoint1">Good for places, nearby activities, and short plans.</li>
+                  <li data-i18n="sceneTravelPoint1">Useful for nearby plans, trips, and weekend outings.</li>
                   <li data-i18n="sceneTravelPoint2">The result suggests a direction while the user stays in control.</li>
                 </ul>
               </div>
@@ -972,11 +1116,11 @@
                 <figcaption data-i18n="sceneActivityCaption">What to do</figcaption>
               </figure>
               <div class="scene-copy">
-                <div class="scene-number">Scene 03</div>
-                <h3 data-i18n="sceneActivityTitle">Turn free time into a small draw.</h3>
-                <p data-i18n="sceneActivityCopy">Movies, walks, chores, games, and small personal plans can all become a light decision. Once the result appears, it is easier to act.</p>
+                <div class="scene-number">Option Set 03</div>
+                <h3 data-i18n="sceneActivityTitle">What to do.</h3>
+                <p data-i18n="sceneActivityCopy">Leisure, chores, family time, and personal tasks can all be turned into a light draw. The generated list gives users momentum, and editing keeps it personal.</p>
                 <ul class="scene-points">
-                  <li data-i18n="sceneActivityPoint1">Suitable for leisure, family time, and personal tasks.</li>
+                  <li data-i18n="sceneActivityPoint1">Good for free time, family activities, and small tasks.</li>
                   <li data-i18n="sceneActivityPoint2">Turns “anything is fine” into something executable.</li>
                 </ul>
               </div>
@@ -988,15 +1132,15 @@
 
     <section class="section chapter" id="games">
       <div class="chapter-rail" data-reveal>
-        <span class="number">03</span>
-        <span class="label" data-i18n="railGames">Game Modes</span>
+        <span class="number">04</span>
+        <span class="label" data-i18n="railGames">Modes</span>
       </div>
       <div class="split">
         <div data-reveal>
-          <div class="eyebrow">Game Modes</div>
-          <h2 data-i18n="gamesTitle">A random result deserves a playful process.</h2>
-          <p class="body-copy" data-i18n="gamesCopy1">A plain answer can feel thin. WhichOne hides the result inside small games: answer book pages, coin flips, capsules, wheels, scratch cards, and other reveals make randomness visible, tactile, and expected.</p>
-          <p class="body-copy" data-i18n="gamesCopy2">Party mode turns the screen into a shared moment. Touch selection, bottle spinning, bomb cards, and capsule games let people wait for the result together instead of having one person announce it.</p>
+          <div class="eyebrow">Solo & Party</div>
+          <h2 data-i18n="gamesTitle">Two modes cover private decisions and group moments.</h2>
+          <p class="body-copy" data-i18n="gamesCopy1">Solo mode keeps a personal decision short: pick a topic, edit options, reveal a result, and keep history for replay.</p>
+          <p class="body-copy" data-i18n="gamesCopy2">Party mode turns the decision into something shared: pick one person, play together around one device, or enter participants to split into teams.</p>
         </div>
         <div class="duo" data-reveal>
           <figure class="phone">
@@ -1005,34 +1149,27 @@
           </figure>
           <figure class="phone">
             <img src="assets/whichOne_party_game.png" alt="Party card bomb game in WhichOne" />
-            <figcaption><span data-i18n="partyCaption">Party game</span><small data-i18n="partySmall">Bomb cards work well when several people gather around one device.</small></figcaption>
+            <figcaption><span data-i18n="partyCaption">Party game</span><small data-i18n="partySmall">Works well when several people gather around one device.</small></figcaption>
           </figure>
         </div>
       </div>
-    </section>
-
-    <section class="section chapter" id="design">
-      <div class="chapter-rail" data-reveal>
-        <span class="number">04</span>
-        <span class="label" data-i18n="railDesign">Visual</span>
-      </div>
-      <div class="design-board">
-        <div data-reveal>
-          <div class="eyebrow">Visual Language</div>
-          <h2 data-i18n="designTitle">Bright, not loud. Cute, not childish.</h2>
-          <p class="body-copy" data-i18n="designCopy1">The high-brightness yellow makes decision-making feel lighter. Black anchors text, buttons, and the cat character. Coral, green, and pink stay as measured accents for scenarios and feedback.</p>
-          <p class="body-copy" data-i18n="designCopy2">The black cat is not just decoration. It gives the app a companion-like personality: a little mischievous, as if saying “stop overthinking and try it.”</p>
-          <div class="palette" aria-label="WhichOne color palette">
-            <div class="swatch sun">Yellow<span>light, decisive</span></div>
-            <div class="swatch black">Black<span>contrast, focus</span></div>
-            <div class="swatch coral">Coral<span>action, result</span></div>
-            <div class="swatch leaf">Green<span>balance, calm</span></div>
-            <div class="swatch rose">Pink<span>play, warmth</span></div>
-          </div>
-        </div>
-        <div class="identity-card" data-reveal>
-          <img src="assets/whichOne_home.png" alt="WhichOne home screen" />
-        </div>
+      <div class="mode-showcase" data-reveal>
+        <figure class="mode-flow">
+          <img src="assets/whichOne_soloMode.png" alt="Solo mode flow from choosing a topic to entering options, revealing a result, and sharing" />
+          <figcaption>
+            <div class="eyebrow" data-i18n="soloFlowEyebrow">Solo Mode</div>
+            <h3 data-i18n="soloFlowTitle">For choices you make by yourself.</h3>
+            <p data-i18n="soloFlowCopy">Start from a preset scene or a custom topic, add options, let the matched game reveal a result, then save or share the answer. It keeps private, everyday decisions quick without making them feel flat.</p>
+          </figcaption>
+        </figure>
+        <figure class="mode-flow">
+          <img src="assets/whichOne_partyMode.png" alt="Party mode flow for group decisions, direct play, adding participants, and team creation" />
+          <figcaption>
+            <div class="eyebrow" data-i18n="partyFlowEyebrow">Party Mode</div>
+            <h3 data-i18n="partyFlowTitle">For decisions that belong to the group.</h3>
+            <p data-i18n="partyFlowCopy">Party mode starts fast when people just want to play, and it also supports participant entry for picking one person or splitting teams. The result becomes a shared moment around one device.</p>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
@@ -1040,42 +1177,44 @@
       <div class="section chapter">
         <div class="chapter-rail" data-reveal>
           <span class="number">05</span>
-          <span class="label" data-i18n="railCraft">Craft</span>
+          <span class="label" data-i18n="railCraft">Games</span>
         </div>
         <div>
-          <div class="split">
-            <div data-reveal>
-              <div class="eyebrow">Interaction Craft</div>
-              <h2 data-i18n="craftTitle">Delicate feedback gives the result weight.</h2>
-              <p class="body-copy" data-i18n="craftLead">Random apps can easily feel weightless. WhichOne tunes touch feedback, physical motion, and Apple haptics so each game has its own rhythm instead of feeling like the same button with a new skin.</p>
-              <div class="craft-grid" data-reveal>
-                <article class="craft-card">
-                  <div class="mark">01</div>
-                  <div>
-                    <h3 data-i18n="craft1Title">Actions have anticipation and closure</h3>
-                    <p data-i18n="craft1Copy">Wheel slowdown, capsule drawing, and card flipping all create a short wait before the result lands.</p>
-                  </div>
-                </article>
-                <article class="craft-card">
-                  <div class="mark">02</div>
-                  <div>
-                    <h3 data-i18n="craft2Title">Touch is more than tapping</h3>
-                    <p data-i18n="craft2Copy">Multi-touch selection, scratch cards, and card games make gestures part of the experience.</p>
-                  </div>
-                </article>
-                <article class="craft-card">
-                  <div class="mark">03</div>
-                  <div>
-                    <h3 data-i18n="craft3Title">Haptics match key moments</h3>
-                    <p data-i18n="craft3Copy">Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.</p>
-                  </div>
-                </article>
-              </div>
+          <div data-reveal>
+            <div class="eyebrow">Game Library</div>
+            <h2 data-i18n="gameLibraryTitle">A small library of polished decision games.</h2>
+            <p class="body-copy" data-i18n="gameLibraryCopy">The app does not rely on one randomizer with different labels. Wheels, cards, capsules, coins, books, dice, and party tools give each choice a different rhythm, so repeat use still feels lively.</p>
+          </div>
+          <div class="feature-strip" data-reveal>
+            <img src="assets/whichOne_game.png" alt="WhichOne game collection with wheel, cards, capsules, dice, coin, and decision screens" />
+            <div class="feature-copy">
+              <div class="eyebrow" data-i18n="gameLibraryEyebrow">More Than Random</div>
+              <h3 data-i18n="craftTitle">Play makes the result easier to accept.</h3>
+              <p data-i18n="craftLead">Instead of dropping an answer instantly, WhichOne lets users watch a wheel slow down, flip a card, draw a capsule, scratch a result, or wait through a small reveal.</p>
             </div>
-            <figure class="phone" data-reveal>
-              <img src="assets/whichOne_party_game2.png" alt="Multi-touch party mode in WhichOne" />
-              <figcaption><span data-i18n="touchCaption">Multi-touch</span><small data-i18n="touchSmall">Several participants press the screen together; highlight and feedback reveal the result.</small></figcaption>
-            </figure>
+          </div>
+          <div class="craft-grid" data-reveal>
+            <article class="craft-card">
+              <div class="mark">01</div>
+              <div>
+                <h3 data-i18n="craft1Title">More games, less repetition</h3>
+                <p data-i18n="craft1Copy">Different game forms keep frequent decisions from feeling like the same button press.</p>
+              </div>
+            </article>
+            <article class="craft-card">
+              <div class="mark">02</div>
+              <div>
+                <h3 data-i18n="craft2Title">Gestures become part of the answer</h3>
+                <p data-i18n="craft2Copy">Spinning, scratching, flipping, tapping, and multi-touch selection make the decision feel tactile.</p>
+              </div>
+            </article>
+            <article class="craft-card">
+              <div class="mark">03</div>
+              <div>
+                <h3 data-i18n="craft3Title">A short wait gives the result weight</h3>
+                <p data-i18n="craft3Copy">Anticipation makes a random answer feel more like a small event, especially in party mode.</p>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -1084,32 +1223,32 @@
     <section class="section chapter" id="devices">
       <div class="chapter-rail" data-reveal>
         <span class="number">06</span>
-        <span class="label" data-i18n="railDevices">Devices</span>
+        <span class="label" data-i18n="railDevices">Care</span>
       </div>
       <div data-reveal>
-        <div class="eyebrow">Accessibility & Devices</div>
-        <h2 data-i18n="devicesTitle">Designed for real use: color, type, orientation, and devices.</h2>
-        <p class="body-copy" data-i18n="devicesLead">WhichOne is not built for one ideal screen size. It considers iPhone and iPad, portrait and landscape, solo handheld use and people gathering around a device, while keeping color, type, and feedback clear for more users.</p>
+        <div class="eyebrow">Visual & Accessibility</div>
+        <h2 data-i18n="devicesTitle">Bright color, clear feedback, and practical accessibility.</h2>
+        <p class="body-copy" data-i18n="devicesLead">WhichOne uses a high-brightness yellow, strong black contrast, playful accent colors, haptic feedback, and large-type support so the experience stays readable, touchable, and easy to understand.</p>
         <div class="device-grid">
           <div class="device-main">
             <img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" />
           </div>
           <div class="device-side">
             <div class="device-item">
-              <h3 data-i18n="accessColorTitle">Color choices for color-weak users</h3>
-              <p data-i18n="accessColorCopy">Status is not communicated through color alone. Text, shapes, button forms, and contrast work together so key information remains understandable.</p>
+              <h3 data-i18n="accessColorTitle">A warm yellow system with black contrast</h3>
+              <p data-i18n="accessColorCopy">Yellow keeps the app bright and light, while black anchors text, buttons, and the cat character. Accent colors support scenes and results without carrying meaning alone.</p>
+            </div>
+            <div class="device-item">
+              <h3 data-i18n="touchCaption">Haptic feedback</h3>
+              <p data-i18n="touchSmall">Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.</p>
             </div>
             <div class="device-item">
               <h3 data-i18n="accessTypeTitle">2x text size and large type</h3>
               <p data-i18n="accessTypeCopy">Important titles, options, buttons, and result feedback are designed to remain readable and tappable even when system text size is increased significantly.</p>
             </div>
             <div class="device-item">
-              <h3 data-i18n="accessOrientTitle">Portrait, landscape, and iPad</h3>
-              <p data-i18n="accessOrientCopy">Solo decisions feel natural on iPhone in portrait, while party play and group selection benefit from iPad or landscape layouts.</p>
-            </div>
-            <div class="device-item">
-              <h3 data-i18n="languagesTitle">Languages</h3>
-              <p data-i18n="languagesCopy">Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported so scenarios, options, and results are easy to understand.</p>
+              <h3 data-i18n="languagesTitle">Languages and device layouts</h3>
+              <p data-i18n="languagesCopy">Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported. iPhone, iPad, portrait, and landscape layouts are considered for solo and group use.</p>
               <div class="language-list" aria-label="Supported languages">
                 <span class="language">简体中文</span>
                 <span class="language">繁體中文</span>
@@ -1159,13 +1298,13 @@
         docTitle: "WhichOne - Decide with a little luck",
         backTop: "Back to top",
         brandTop: "Back to top",
-        navOrigin: "Origin",
-        navScenes: "Scenes",
+        navOrigin: "Overview",
+        navScenes: "Options",
         navGames: "Modes",
-        navDesign: "Design",
-        navCraft: "Craft",
-        navDevices: "Devices",
-        navNotes: "Notes",
+        navDesign: "Cat IP",
+        navCraft: "Games",
+        navDevices: "Care",
+        navNotes: "Boundaries",
         heroKicker: "For life's little decisions",
         heroTitle: "Decide with a little luck.",
         heroLead: "WhichOne is made for choices that are too small for serious analysis but still manage to slow you down. What to eat, where to go, what to do, who goes first: put the options into a playful decision game and let the answer appear naturally.",
@@ -1174,64 +1313,76 @@
         pillParty: "Party modes",
         pillDevices: "iPhone / iPad",
         pillLanguages: "Multilingual",
-        railOrigin: "Origin",
+        railOrigin: "Overview",
         originLine1: "Many decisions feel tiring not because the options are complex, but because they are almost equally fine.",
-        originLine2: "WhichOne turns that small hesitation into a tiny ritual: tap, spin, scratch, reveal, and move on.",
-        originLine3: "It is closer to a gentle decision companion than a productivity tool. It keeps randomness light, then adds visual, tactile, and haptic feedback so the process feels worth handing over.",
-        originCardTitle: "Made for tiny everyday friction.",
-        originCardCopy: "When everyone says “anything,” when the menu takes too long, or when a weekend plan stalls, WhichOne gives that moment a playful way forward.",
-        railScenes: "Scenes",
-        scenesTitle: "Start with a real question, not a blank form.",
-        scenesLead: "People often open the app with a specific question already in mind. WhichOne prepares common scenarios so users can begin without inventing a list first.",
+        originLine2: "WhichOne turns that small hesitation into a light decision ritual: choose a scene, let the black cat guide the process, reveal a result, and move on.",
+        originLine3: "The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who goes first, or how a group should split. It keeps the decision quick while making the moment feel playful.",
+        originCardTitle: "For choices that are small, but still sticky.",
+        originCardCopy: "When every answer is acceptable, WhichOne gives the user a clear next step instead of another blank moment.",
+        railScenes: "Options",
+        scenesTitle: "Start from common questions: eat, go, do.",
+        scenesLead: "WhichOne prepares option sets for food, places, and activities. Users can quickly generate choices based on preference, then edit the options freely before starting a decision game.",
         sceneFoodCaption: "What to eat",
-        sceneFoodTitle: "Get dinner moving.",
-        sceneFoodCopy: "For dinner, takeout, or a meal with friends, the hard part is often that every option is acceptable. Built-in food choices lower the starting cost and can still be adjusted to taste.",
-        sceneFoodPoint1: "Preset food options reduce blank-page work.",
-        sceneFoodPoint2: "Useful for group meals, takeout, and weekday dinners.",
+        sceneFoodTitle: "What to eat.",
+        sceneFoodCopy: "Food choices help users move past the most common daily question. The app can provide a useful starting list, while users can still add, delete, or rewrite options to match taste.",
+        sceneFoodPoint1: "Quickly starts dinner, takeout, and group meal decisions.",
+        sceneFoodPoint2: "Editable options keep the result aligned with real preference.",
         sceneTravelCaption: "Where to go",
-        sceneTravelTitle: "Give an outing a direction.",
-        sceneTravelCopy: "When a weekend, trip, or quick outing has no clear destination, a random result does not replace planning; it simply gives the plan a first step.",
-        sceneTravelPoint1: "Good for places, nearby activities, and short plans.",
+        sceneTravelTitle: "Where to go.",
+        sceneTravelCopy: "When the plan has no destination yet, the app gives users a direction first: nearby places, short outings, weekend ideas, or travel candidates can all become decision options.",
+        sceneTravelPoint1: "Useful for nearby plans, trips, and weekend outings.",
         sceneTravelPoint2: "The result suggests a direction while the user stays in control.",
         sceneActivityCaption: "What to do",
-        sceneActivityTitle: "Turn free time into a small draw.",
-        sceneActivityCopy: "Movies, walks, chores, games, and small personal plans can all become a light decision. Once the result appears, it is easier to act.",
-        sceneActivityPoint1: "Suitable for leisure, family time, and personal tasks.",
+        sceneActivityTitle: "What to do.",
+        sceneActivityCopy: "Leisure, chores, family time, and personal tasks can all be turned into a light draw. The generated list gives users momentum, and editing keeps it personal.",
+        sceneActivityPoint1: "Good for free time, family activities, and small tasks.",
         sceneActivityPoint2: "Turns “anything is fine” into something executable.",
-        railGames: "Game Modes",
-        gamesTitle: "A random result deserves a playful process.",
-        gamesCopy1: "A plain answer can feel thin. WhichOne hides the result inside small games: answer book pages, coin flips, capsules, wheels, scratch cards, and other reveals make randomness visible, tactile, and expected.",
-        gamesCopy2: "Party mode turns the screen into a shared moment. Touch selection, bottle spinning, bomb cards, and capsule games let people wait for the result together instead of having one person announce it.",
+        railGames: "Modes",
+        gamesTitle: "Two modes cover private decisions and group moments.",
+        gamesCopy1: "Solo mode keeps a personal decision short: pick a topic, edit options, reveal a result, and keep history for replay.",
+        gamesCopy2: "Party mode turns the decision into something shared: pick one person, play together around one device, or enter participants to split into teams.",
         soloCaption: "Solo game",
         soloSmall: "Draw one result from the options and keep result history.",
         partyCaption: "Party game",
-        partySmall: "Bomb cards work well when several people gather around one device.",
-        railDesign: "Visual",
+        partySmall: "Works well when several people gather around one device.",
+        gameLibraryEyebrow: "More Than Random",
+        gameLibraryTitle: "A small library of polished decision games.",
+        gameLibraryCopy: "The app does not rely on one randomizer with different labels. Wheels, cards, capsules, coins, books, dice, and party tools give each choice a different rhythm, so repeat use still feels lively.",
+        soloFlowEyebrow: "Solo Mode",
+        soloFlowTitle: "For choices you make by yourself.",
+        soloFlowCopy: "Start from a preset scene or a custom topic, add options, let the matched game reveal a result, then save or share the answer. It keeps private, everyday decisions quick without making them feel flat.",
+        partyFlowEyebrow: "Party Mode",
+        partyFlowTitle: "For decisions that belong to the group.",
+        partyFlowCopy: "Party mode starts fast when people just want to play, and it also supports participant entry for picking one person or splitting teams. The result becomes a shared moment around one device.",
+        railDesign: "Cat IP",
         designTitle: "Bright, not loud. Cute, not childish.",
         designCopy1: "The high-brightness yellow makes decision-making feel lighter. Black anchors text, buttons, and the cat character. Coral, green, and pink stay as measured accents for scenarios and feedback.",
-        designCopy2: "The black cat is not just decoration. It gives the app a companion-like personality: a little mischievous, as if saying “stop overthinking and try it.”",
-        railCraft: "Craft",
-        craftTitle: "Delicate feedback gives the result weight.",
-        craftLead: "Random apps can easily feel weightless. WhichOne tunes touch feedback, physical motion, and Apple haptics so each game has its own rhythm instead of feeling like the same button with a new skin.",
-        craft1Title: "Actions have anticipation and closure",
-        craft1Copy: "Wheel slowdown, capsule drawing, and card flipping all create a short wait before the result lands.",
-        craft2Title: "Touch is more than tapping",
-        craft2Copy: "Multi-touch selection, scratch cards, and card games make gestures part of the experience.",
-        craft3Title: "Haptics match key moments",
-        craft3Copy: "Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.",
-        touchCaption: "Multi-touch",
-        touchSmall: "Several participants press the screen together; highlight and feedback reveal the result.",
-        railDevices: "Devices",
-        devicesTitle: "Designed for real use: color, type, orientation, and devices.",
-        devicesLead: "WhichOne is not built for one ideal screen size. It considers iPhone and iPad, portrait and landscape, solo handheld use and people gathering around a device, while keeping color, type, and feedback clear for more users.",
-        accessColorTitle: "Color choices for color-weak users",
-        accessColorCopy: "Status is not communicated through color alone. Text, shapes, button forms, and contrast work together so key information remains understandable.",
+        designCopy2: "Its mischievous expression softens hesitation. The app is essentially saying: stop overthinking, let the cat help you pick one.",
+        catIpEyebrow: "Black Cat IP",
+        catIpTitle: "One character carries the whole decision experience.",
+        catIpCopy: "The black cat runs through WhichOne: topics, built-in options, mini games, team splitting, cards, coins, and result moments. That repeated presence makes the app feel like a companion, not just a utility.",
+        railCraft: "Games",
+        craftTitle: "Play makes the result easier to accept.",
+        craftLead: "Instead of dropping an answer instantly, WhichOne lets users watch a wheel slow down, flip a card, draw a capsule, scratch a result, or wait through a small reveal.",
+        craft1Title: "More games, less repetition",
+        craft1Copy: "Different game forms keep frequent decisions from feeling like the same button press.",
+        craft2Title: "Gestures become part of the answer",
+        craft2Copy: "Spinning, scratching, flipping, tapping, and multi-touch selection make the decision feel tactile.",
+        craft3Title: "A short wait gives the result weight",
+        craft3Copy: "Anticipation makes a random answer feel more like a small event, especially in party mode.",
+        touchCaption: "Haptic feedback",
+        touchSmall: "Confirmation, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.",
+        railDevices: "Care",
+        devicesTitle: "Bright color, clear feedback, and practical accessibility.",
+        devicesLead: "WhichOne uses a high-brightness yellow, strong black contrast, playful accent colors, haptic feedback, and large-type support so the experience stays readable, touchable, and easy to understand.",
+        accessColorTitle: "A warm yellow system with black contrast",
+        accessColorCopy: "Yellow keeps the app bright and light, while black anchors text, buttons, and the cat character. Accent colors support scenes and results without carrying meaning alone.",
         accessTypeTitle: "2x text size and large type",
         accessTypeCopy: "Important titles, options, buttons, and result feedback are designed to remain readable and tappable even when system text size is increased significantly.",
         accessOrientTitle: "Portrait, landscape, and iPad",
         accessOrientCopy: "Solo decisions feel natural on iPhone in portrait, while party play and group selection benefit from iPad or landscape layouts.",
-        languagesTitle: "Languages",
-        languagesCopy: "Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported so scenarios, options, and results are easy to understand.",
+        languagesTitle: "Languages and device layouts",
+        languagesCopy: "Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported. iPhone, iPad, portrait, and landscape layouts are considered for solo and group use.",
         notesTitle: "A few boundaries.",
         notesLead: "WhichOne is for everyday lightweight decisions and group interaction. It is not for high-risk professional judgment.",
         noteUseStrong: "Use boundary:",
@@ -1249,13 +1400,13 @@
         docTitle: "WhichOne - ちょっとした運に決めてもらう",
         backTop: "トップへ戻る",
         brandTop: "トップへ戻る",
-        navOrigin: "背景",
-        navScenes: "シーン",
-        navGames: "遊び方",
-        navDesign: "デザイン",
-        navCraft: "操作感",
-        navDevices: "端末",
-        navNotes: "補足",
+        navOrigin: "概要",
+        navScenes: "選択肢",
+        navGames: "モード",
+        navDesign: "黒猫IP",
+        navCraft: "ゲーム",
+        navDevices: "配慮",
+        navNotes: "範囲",
         heroKicker: "日常の小さな選択のために",
         heroTitle: "少しの運に、選択をまかせる。",
         heroLead: "WhichOne は、真剣に分析するほどではないのに、なぜか手が止まる小さな選択のためのアプリです。何を食べるか、どこへ行くか、何をするか、誰が先か。選択肢を楽しいゲームに入れるだけで、答えが自然に現れます。",
@@ -1264,13 +1415,13 @@
         pillParty: "パーティーモード",
         pillDevices: "iPhone / iPad",
         pillLanguages: "多言語",
-        railOrigin: "背景",
+        railOrigin: "概要",
         originLine1: "選択が疲れるのは、選択肢が複雑だからではなく、どれも同じくらい良いからです。",
         originLine2: "WhichOne は、その小さな迷いを、タップして、回して、削って、結果を見るという小さな儀式に変えます。",
         originLine3: "効率化ツールというより、やさしい決定の相棒です。軽いランダム性に、視覚・触感・ハプティックのフィードバックを加え、任せたくなる体験にしています。",
         originCardTitle: "日常の小さな引っかかりのために。",
         originCardCopy: "みんなが「なんでもいい」と言うとき、メニュー選びが長引くとき、週末の予定が決まらないとき、WhichOne は前に進むきっかけを作ります。",
-        railScenes: "シーン",
+        railScenes: "選択肢",
         scenesTitle: "空白フォームではなく、実際の問いから始める。",
         scenesLead: "ユーザーはたいてい、具体的な悩みを持ってアプリを開きます。WhichOne はよくあるシーンを用意し、リスト作りから始めなくてもすぐ選べるようにします。",
         sceneFoodCaption: "何を食べる？",
@@ -1288,7 +1439,7 @@
         sceneActivityCopy: "映画、散歩、家事、ゲーム、小さな予定を軽い選択にできます。結果が出ると、次の行動に移りやすくなります。",
         sceneActivityPoint1: "余暇、家族時間、個人タスクに適しています。",
         sceneActivityPoint2: "「なんでもいい」を実行できる結果に変えます。",
-        railGames: "遊び方",
+        railGames: "モード",
         gamesTitle: "ランダムな結果には、楽しい過程が必要です。",
         gamesCopy1: "ただ答えを出すだけでは体験は薄くなります。答えの本、コイン、カプセル、ルーレット、スクラッチなどが、ランダムを見えて触れられるものにします。",
         gamesCopy2: "パーティーモードでは、画面が共有の場になります。タッチ選択、ボトル回し、爆弾カード、カプセルなどで、みんなが一緒に結果を待てます。",
@@ -1296,11 +1447,23 @@
         soloSmall: "選択肢から結果を引き、履歴を残します。",
         partyCaption: "パーティーゲーム",
         partySmall: "爆弾カードは複数人で一台の端末を囲む場面に向いています。",
-        railDesign: "ビジュアル",
+        gameLibraryEyebrow: "ランダム以上",
+        gameLibraryTitle: "小さく磨かれた決定ゲームのライブラリ。",
+        gameLibraryCopy: "同じランダム機能に名前を付け替えるのではありません。ルーレット、カード、カプセル、コイン、本、サイコロ、パーティーツールが、それぞれ違うリズムで選択を見せます。",
+        soloFlowEyebrow: "ソロモード",
+        soloFlowTitle: "ひとりで決める小さな選択に。",
+        soloFlowCopy: "プリセットシーンや自由なテーマから始め、選択肢を入れると、合うゲームで結果を表示します。答えは保存や共有もでき、日常の個人的な選択をすばやく、でも味気なくなく進められます。",
+        partyFlowEyebrow: "パーティーモード",
+        partyFlowTitle: "グループで決める場面に。",
+        partyFlowCopy: "すぐ遊びたいときは直接始められ、参加者を入力して一人を選んだりチーム分けしたりもできます。結果を一台の端末の周りで共有する時間に変えます。",
+        railDesign: "黒猫IP",
         designTitle: "明るいけれど騒がしくない。かわいいけれど幼すぎない。",
         designCopy1: "明るい黄色は、決めることを軽く感じさせます。黒は文字、ボタン、猫のキャラクターを支える軸です。コーラル、グリーン、ピンクは控えめなアクセントとして使います。",
         designCopy2: "黒猫はただの装飾ではありません。少しいたずらっぽく「考えすぎず試してみよう」と言う相棒のような存在です。",
-        railCraft: "操作感",
+        catIpEyebrow: "黒猫IP",
+        catIpTitle: "ひとつのキャラクターが選択体験をつなぎます。",
+        catIpCopy: "黒猫はテーマ、ゲーム、チーム分け、カード、コイン、広告削除の場面にまで登場します。その繰り返しが、ばらばらな道具ではなく WhichOne らしい人格を作ります。",
+        railCraft: "ゲーム",
         craftTitle: "細やかなフィードバックが、結果に重みを与える。",
         craftLead: "ランダム系アプリは軽く感じられがちです。WhichOne はタッチ、物理的な動き、Apple のハプティックを調整し、遊びごとに違うリズムを持たせています。",
         craft1Title: "動きには前奏と終わりがある",
@@ -1311,7 +1474,7 @@
         craft3Copy: "確認、結果表示、状態変化にハプティックを合わせ、フィードバックを感じやすくします。",
         touchCaption: "マルチタッチ",
         touchSmall: "複数人が同時に画面を押し、ハイライトとフィードバックで結果が出ます。",
-        railDevices: "端末",
+        railDevices: "配慮",
         devicesTitle: "色、文字、向き、端末まで実際の利用に合わせる。",
         devicesLead: "WhichOne は理想的な一つの画面だけを前提にしていません。iPhone と iPad、縦向きと横向き、ひとりで持つ場面と複数人で囲む場面を考慮し、色・文字・フィードバックをより多くのユーザーに分かりやすくします。",
         accessColorTitle: "色弱ユーザーにも配慮した色設計",
@@ -1339,13 +1502,13 @@
         docTitle: "WhichOne - 작은 운에 결정을 맡기기",
         backTop: "맨 위로",
         brandTop: "맨 위로",
-        navOrigin: "기획",
-        navScenes: "상황",
+        navOrigin: "개요",
+        navScenes: "선택지",
         navGames: "모드",
-        navDesign: "디자인",
-        navCraft: "피드백",
-        navDevices: "기기",
-        navNotes: "안내",
+        navDesign: "고양이 IP",
+        navCraft: "게임",
+        navDevices: "배려",
+        navNotes: "범위",
         heroKicker: "일상의 작은 선택을 위해",
         heroTitle: "작은 운에 선택을 맡겨보세요.",
         heroLead: "WhichOne은 진지하게 분석할 만큼 크지는 않지만 은근히 발목을 잡는 작은 선택을 위해 만든 앱입니다. 무엇을 먹을지, 어디로 갈지, 무엇을 할지, 누가 먼저 할지. 선택지를 재미있는 결정 게임에 넣으면 답이 자연스럽게 나타납니다.",
@@ -1354,13 +1517,13 @@
         pillParty: "파티 모드",
         pillDevices: "iPhone / iPad",
         pillLanguages: "다국어",
-        railOrigin: "기획",
+        railOrigin: "개요",
         originLine1: "선택이 피곤한 이유는 선택지가 복잡해서가 아니라, 모두 비슷하게 괜찮기 때문일 때가 많습니다.",
         originLine2: "WhichOne은 그 작은 망설임을 탭하고, 돌리고, 긁고, 확인하는 작은 의식으로 바꿉니다.",
         originLine3: "효율 도구라기보다 부드러운 결정 도우미에 가깝습니다. 가벼운 랜덤성에 시각, 터치, 햅틱 피드백을 더해 맡기고 싶은 경험을 만듭니다.",
         originCardTitle: "일상의 작은 멈춤을 위해.",
         originCardCopy: "모두가 “아무거나”라고 할 때, 메뉴를 오래 고를 때, 주말 계획이 멈출 때 WhichOne은 앞으로 나아갈 재미있는 계기를 줍니다.",
-        railScenes: "상황",
+        railScenes: "선택지",
         scenesTitle: "빈 입력창이 아니라 실제 질문에서 시작합니다.",
         scenesLead: "사용자는 이미 구체적인 질문을 가지고 앱을 여는 경우가 많습니다. WhichOne은 자주 쓰는 상황을 준비해 두어 목록을 처음부터 만들지 않아도 바로 시작할 수 있습니다.",
         sceneFoodCaption: "무엇을 먹을까",
@@ -1386,11 +1549,23 @@
         soloSmall: "선택지에서 결과를 뽑고 기록을 남깁니다.",
         partyCaption: "파티 게임",
         partySmall: "폭탄 카드는 여러 사람이 한 기기를 둘러싼 상황에 어울립니다.",
-        railDesign: "디자인",
+        gameLibraryEyebrow: "랜덤 그 이상",
+        gameLibraryTitle: "작지만 완성도 있는 결정 게임 모음.",
+        gameLibraryCopy: "같은 랜덤 기능에 이름만 바꾼 구조가 아닙니다. 룰렛, 카드, 캡슐, 동전, 책, 주사위, 파티 도구가 각 선택에 다른 리듬을 만들어 반복 사용도 지루하지 않게 합니다.",
+        soloFlowEyebrow: "솔로 모드",
+        soloFlowTitle: "혼자 정하는 선택을 위해.",
+        soloFlowCopy: "프리셋 상황이나 직접 만든 주제로 시작하고, 선택지를 넣으면 어울리는 게임이 결과를 보여줍니다. 답을 저장하거나 공유할 수 있어 개인적인 일상 선택을 빠르지만 밋밋하지 않게 처리합니다.",
+        partyFlowEyebrow: "파티 모드",
+        partyFlowTitle: "그룹이 함께 정하는 순간을 위해.",
+        partyFlowCopy: "바로 놀고 싶을 때는 즉시 시작할 수 있고, 참가자를 입력해 한 사람을 뽑거나 팀을 나눌 수도 있습니다. 결과가 한 기기 주변의 함께 보는 순간이 됩니다.",
+        railDesign: "고양이 IP",
         designTitle: "밝지만 시끄럽지 않고, 귀엽지만 유치하지 않게.",
         designCopy1: "밝은 노란색은 결정하는 일을 가볍게 느끼게 합니다. 검정은 텍스트, 버튼, 고양이 캐릭터를 잡아주는 기준이 됩니다. 코럴, 그린, 핑크는 상황과 피드백을 위한 절제된 포인트입니다.",
         designCopy2: "검은 고양이는 단순한 장식이 아닙니다. “너무 고민하지 말고 한번 해봐”라고 말하는 장난스러운 동반자 같은 성격을 만듭니다.",
-        railCraft: "피드백",
+        catIpEyebrow: "검은 고양이 IP",
+        catIpTitle: "하나의 캐릭터가 선택 경험을 묶어 줍니다.",
+        catIpCopy: "고양이는 주제, 게임, 팀 나누기, 카드, 동전, 광고 제거 순간까지 반복해서 등장합니다. 이 존재감이 WhichOne을 서로 다른 도구 모음이 아니라 알아보기 쉬운 성격의 앱으로 만듭니다.",
+        railCraft: "게임",
         craftTitle: "섬세한 피드백이 결과에 무게를 줍니다.",
         craftLead: "랜덤 앱은 쉽게 가볍게 느껴질 수 있습니다. WhichOne은 터치 피드백, 물리 움직임, Apple 햅틱을 조정해 각 게임이 고유한 리듬을 갖게 합니다.",
         craft1Title: "동작에는 기대와 마무리가 있습니다",
@@ -1401,7 +1576,7 @@
         craft3Copy: "확인, 결과 공개, 상태 변화에 Apple 기기 햅틱을 맞춰 피드백을 더 잘 느끼게 합니다.",
         touchCaption: "멀티터치",
         touchSmall: "여러 참여자가 함께 화면을 누르면 하이라이트와 피드백으로 결과가 드러납니다.",
-        railDevices: "기기",
+        railDevices: "배려",
         devicesTitle: "색상, 글자, 방향, 기기까지 실제 사용에 맞춥니다.",
         devicesLead: "WhichOne은 하나의 이상적인 화면만 전제로 하지 않습니다. iPhone과 iPad, 세로와 가로, 혼자 손에 들고 쓰는 상황과 여러 사람이 둘러보는 상황을 고려합니다.",
         accessColorTitle: "색약 사용자를 고려한 색상",
@@ -1429,13 +1604,13 @@
         docTitle: "WhichOne - 把选择交给一点点好运气",
         backTop: "回到顶部",
         brandTop: "返回顶部",
-        navOrigin: "初衷",
-        navScenes: "场景",
-        navGames: "玩法",
-        navDesign: "设计",
-        navCraft: "交互",
-        navDevices: "设备",
-        navNotes: "说明",
+        navOrigin: "总览",
+        navScenes: "选项",
+        navGames: "模式",
+        navDesign: "黑猫 IP",
+        navCraft: "游戏",
+        navDevices: "体验",
+        navNotes: "边界",
         heroKicker: "For life's little decisions",
         heroTitle: "把选择交给一点点好运气。",
         heroLead: "WhichOne 为那些“不重要到需要认真分析，却又真实卡住你”的小选择而做。吃什么、去哪儿、做什么、谁先来，用户可以把选项放进一个轻松的游戏里，让结果自然地出现。",
@@ -1444,64 +1619,76 @@
         pillParty: "多人派对玩法",
         pillDevices: "iPhone / iPad",
         pillLanguages: "多语言",
-        railOrigin: "初衷",
+        railOrigin: "总览",
         originLine1: "很多选择真正消耗人的地方，并不是选项有多复杂，而是它们都差不多。",
-        originLine2: "WhichOne 把这种无谓的犹豫变成一个有仪式感的小动作：轻点一下、转一下、刮一下，结果出现，事情继续往前走。",
-        originLine3: "它更像一个温和的决定助手，而不是效率工具。它保留随机的轻松，也让过程有视觉、触摸和反馈，用户才会愿意把这些小选择交给它。",
-        originCardTitle: "处理生活里的小摩擦。",
-        originCardCopy: "几个人都说“随便”，菜单翻了很久，周末计划迟迟定不下来。WhichOne 关注的就是这些真实、轻微、但每天都会出现的停顿。",
-        railScenes: "场景",
-        scenesTitle: "选择不是从功能开始，而是从一句“要不随便吧”开始。",
-        scenesLead: "用户打开应用时，常常已经带着一个具体问题。WhichOne 把高频场景提前整理好，让用户不必先想一套选项，马上就能进入选择。",
+        originLine2: "WhichOne 把这种小小的犹豫变成一个轻松的决策流程：选择场景，让黑猫带着用户进入玩法，揭晓结果，然后继续往前走。",
+        originLine3: "它面向的是低风险的日常选择：吃什么、去哪儿、做什么、谁先来、怎么分组。目标不是替用户做重大判断，而是让那些每天都会卡住人的小选择更快、更有趣地完成。",
+        originCardTitle: "处理那些很小、但真的会卡住人的选择。",
+        originCardCopy: "当每个答案都“也可以”时，WhichOne 给用户一个明确的下一步，而不是继续停在空白里。",
+        railScenes: "选项",
+        scenesTitle: "从吃什么、去哪儿、做什么这些高频问题开始。",
+        scenesLead: "WhichOne 为餐食、地点和活动准备了内置选项。用户可以根据偏好快速生成候选项，也可以在开始游戏前自由编辑、删除或补充选项。",
         sceneFoodCaption: "吃什么",
-        sceneFoodTitle: "先让晚饭动起来。",
-        sceneFoodCopy: "晚饭、外卖、聚餐前，最难的往往不是没有选择，而是每个人都可以。WhichOne 用预设选项降低开始成本，用户也可以按偏好调整。",
-        sceneFoodPoint1: "预设餐食选项，打开后不用从零输入。",
-        sceneFoodPoint2: "适合朋友聚餐、外卖选择和工作日晚饭。",
+        sceneFoodTitle: "吃什么。",
+        sceneFoodCopy: "餐食选项帮助用户跳过最常见的日常纠结。应用可以先给出一个可用列表，用户再按口味添加、删除或修改。",
+        sceneFoodPoint1: "适合晚饭、外卖、聚餐等高频场景。",
+        sceneFoodPoint2: "选项可编辑，让结果更贴合真实偏好。",
         sceneTravelCaption: "去哪儿",
-        sceneTravelTitle: "给临时出门一个方向。",
-        sceneTravelCopy: "周末、旅行或临时出门没有明确目标时，随机结果不是替用户规划路线，而是帮计划先迈出第一步。",
-        sceneTravelPoint1: "适合地点、周边活动和短途计划。",
+        sceneTravelTitle: "去哪儿。",
+        sceneTravelCopy: "当计划还没有目的地时，应用先给一个方向：附近地点、短途出门、周末安排或旅行候选，都可以成为决策选项。",
+        sceneTravelPoint1: "适合周边计划、旅行和周末出门。",
         sceneTravelPoint2: "结果只给方向，用户仍然保留最后决定权。",
         sceneActivityCaption: "做什么",
-        sceneActivityTitle: "把空闲时间变成一次小抽签。",
-        sceneActivityCopy: "看电影、散步、做家务、玩游戏，都可以被放进一次轻松选择里。结果出来后，用户更容易继续行动。",
-        sceneActivityPoint1: "适合休闲活动、家庭互动和个人待办。",
+        sceneActivityTitle: "做什么。",
+        sceneActivityCopy: "休闲、家务、家庭互动和个人待办都可以变成一次轻松抽签。生成列表带来行动起点，编辑能力保留个人偏好。",
+        sceneActivityPoint1: "适合空闲时间、家庭活动和小任务。",
         sceneActivityPoint2: "让“都行”变成一个可以执行的小结果。",
-        railGames: "游戏玩法",
-        gamesTitle: "随机结果需要一个好玩的过程。",
-        gamesCopy1: "如果只是给出一个答案，体验会很薄。WhichOne 把结果藏在不同的小玩法里：答案之书的翻页、硬币的正反、扭蛋机的抽取、大转盘的减速、刮刮乐的揭晓，都让随机变得可看、可摸、可期待。",
-        gamesCopy2: "多人模式则把屏幕变成一个共享的现场。按手指、转酒瓶、翻卡抽炸弹、扭蛋机等玩法，让参与者一起等待结果，而不是由某个人独自宣布。",
+        railGames: "模式",
+        gamesTitle: "单人模式和派对模式覆盖两类决策场景。",
+        gamesCopy1: "单人模式用于一个人自己的小选择：选择主题、编辑选项、揭晓结果，并保留历史方便再次游玩。",
+        gamesCopy2: "派对模式把决策变成多人共享的现场：可以抽一个人、围着一台设备一起玩，也可以录入参与者后进行分组。",
         soloCaption: "单人游戏",
         soloSmall: "从选项中抽出一个结果，并保留结果历史。",
         partyCaption: "派对游戏",
-        partySmall: "翻卡抽炸弹适合多人围在同一台设备前互动。",
-        railDesign: "视觉",
+        partySmall: "适合多人围在同一台设备前互动。",
+        gameLibraryEyebrow: "不只是随机",
+        gameLibraryTitle: "一组足够精致的决策小游戏。",
+        gameLibraryCopy: "WhichOne 不是把同一个随机器换几套名字。转盘、卡牌、扭蛋、硬币、答案之书、骰子和派对工具会给选择不同的节奏，让反复使用也保持新鲜。",
+        soloFlowEyebrow: "单人模式",
+        soloFlowTitle: "处理一个人自己的小选择。",
+        soloFlowCopy: "用户可以从预设场景或自定义主题开始，输入选项后由匹配的小游戏揭晓结果，再保存或分享答案。它让私人的日常选择足够快，也不显得单薄。",
+        partyFlowEyebrow: "派对模式",
+        partyFlowTitle: "处理属于一群人的选择。",
+        partyFlowCopy: "想马上玩时可以直接开始；需要参与者时，也可以录入名单，用来抽一个人或分组。结果不再是某个人宣布，而是围着同一台设备一起等待。",
+        railDesign: "黑猫 IP",
         designTitle: "明亮，但不是吵闹；可爱，但不幼稚。",
         designCopy1: "高明度黄色让“做决定”这件事显得轻一点。黑色承担文字、按钮和黑猫形象的识别，形成稳定锚点。珊瑚红、草绿色和粉色只做点到为止的辅助，让不同场景和结果反馈更有层次。",
-        designCopy2: "黑猫不是单纯装饰，它让应用有一个陪伴者的气质：有点调皮，像在旁边说“别纠结了，试试看”。",
-        railCraft: "交互",
-        craftTitle: "细腻的反馈，让结果更有分量。",
-        craftLead: "随机类应用容易做得很轻飘。WhichOne 在触摸反馈、物理运动和系统震动上做了更细的处理，让每一种游戏都有自己的节奏，而不是所有玩法都像同一个按钮换皮。",
-        craft1Title: "动作有前奏，也有收束",
-        craft1Copy: "转盘减速、扭蛋抽取、卡牌翻开，都给用户一个等待结果的过程。",
-        craft2Title: "触摸不是只负责点击",
-        craft2Copy: "多人按手指、刮刮乐和卡牌玩法都让手势成为体验的一部分。",
-        craft3Title: "震动反馈对应关键瞬间",
-        craft3Copy: "操作确认、结果出现和游戏状态变化，都通过 Apple 设备触感反馈加强可感知性。",
-        touchCaption: "多人触摸",
-        touchSmall: "多个参与者同时按住屏幕，结果通过高亮和反馈自然出现。",
-        railDevices: "设备",
-        devicesTitle: "从颜色、字体到横竖屏，都为真实使用场合做适配。",
-        devicesLead: "WhichOne 的界面不是只在一种理想尺寸下成立。它同时考虑 iPhone 与 iPad、横屏与竖屏、多人围坐与单人手持，也尽量让色彩、字号和反馈对更多用户保持清楚。",
-        accessColorTitle: "色弱友好的色彩策略",
-        accessColorCopy: "明黄色、黑色和辅助色并不只靠颜色本身区分状态，还结合文字、图形、按钮形态和对比度，让色弱用户也能理解主要信息。",
+        designCopy2: "它有点调皮的表情会缓解用户纠结时的僵住感。应用传达的感觉是：别想太久，让黑猫帮你先选一个。",
+        catIpEyebrow: "黑猫 IP",
+        catIpTitle: "用一个角色贯穿整个决策体验。",
+        catIpCopy: "黑猫贯穿 WhichOne 的主题、内置选项、小游戏、分组、卡牌、硬币和结果时刻。它让应用不像一组松散工具，而更像一个陪用户做决定的小伙伴。",
+        railCraft: "游戏",
+        craftTitle: "游戏感让结果更容易被接受。",
+        craftLead: "应用不会立刻丢出一个答案，而是让用户看到转盘减速、卡牌翻开、扭蛋抽取、刮开结果或等待一次小揭晓。",
+        craft1Title: "玩法多，重复感少",
+        craft1Copy: "不同的游戏形式让高频决策不总像按同一个按钮。",
+        craft2Title: "手势也是答案的一部分",
+        craft2Copy: "转、刮、翻、点、多人触摸，都让决策过程更有参与感。",
+        craft3Title: "短暂等待让结果更有分量",
+        craft3Copy: "期待感会让随机答案更像一次小事件，尤其适合派对场景。",
+        touchCaption: "震动反馈",
+        touchSmall: "操作确认、结果出现和状态变化会配合 Apple 设备触感反馈，让关键瞬间更容易被感知。",
+        railDevices: "体验",
+        devicesTitle: "明亮色系、清晰反馈和实用的辅助体验。",
+        devicesLead: "WhichOne 使用高明度黄色、强黑色对比、活泼辅助色、震动反馈和大字体支持，让体验保持清楚、可点、可感知。",
+        accessColorTitle: "温暖黄色与黑色对比",
+        accessColorCopy: "黄色让应用轻快，黑色承担文字、按钮和黑猫识别。辅助色用于场景和结果反馈，但不会只靠颜色传递关键信息。",
         accessTypeTitle: "2 倍字号与大字体",
         accessTypeCopy: "关键标题、选项、按钮和结果反馈都考虑更大字体显示。即使系统字体放大到 2 倍，核心流程仍尽量保持可读、可点、可完成。",
         accessOrientTitle: "横竖屏与 iPad",
         accessOrientCopy: "单人快速选择更适合 iPhone 竖屏；多人派对、围坐互动和分组场景则更适合 iPad 或横屏展示。",
-        languagesTitle: "多语言",
-        languagesCopy: "覆盖简体中文、繁体中文、日语、韩语和英语，让不同地区用户都能直接理解场景、选项和结果。",
+        languagesTitle: "多语言与设备布局",
+        languagesCopy: "覆盖简体中文、繁体中文、日语、韩语和英语，也考虑 iPhone、iPad、横屏、竖屏下的单人和多人使用。",
         notesTitle: "一些边界说明。",
         notesLead: "WhichOne 的定位是日常轻量决策和多人互动，不用于高风险专业判断。",
         noteUseStrong: "用途边界：",
@@ -1519,13 +1706,13 @@
         docTitle: "WhichOne - 把選擇交給一點點好運氣",
         backTop: "回到頂部",
         brandTop: "返回頂部",
-        navOrigin: "初衷",
-        navScenes: "場景",
-        navGames: "玩法",
-        navDesign: "設計",
-        navCraft: "互動",
-        navDevices: "裝置",
-        navNotes: "說明",
+        navOrigin: "總覽",
+        navScenes: "選項",
+        navGames: "模式",
+        navDesign: "黑貓 IP",
+        navCraft: "遊戲",
+        navDevices: "體驗",
+        navNotes: "邊界",
         heroKicker: "For life's little decisions",
         heroTitle: "把選擇交給一點點好運氣。",
         heroLead: "WhichOne 為那些「不重要到需要認真分析，卻又真實卡住你」的小選擇而做。吃什麼、去哪兒、做什麼、誰先來，使用者可以把選項放進一個輕鬆的遊戲裡，讓結果自然出現。",
@@ -1534,64 +1721,76 @@
         pillParty: "多人派對玩法",
         pillDevices: "iPhone / iPad",
         pillLanguages: "多語言",
-        railOrigin: "初衷",
+        railOrigin: "總覽",
         originLine1: "很多選擇真正消耗人的地方，並不是選項有多複雜，而是它們都差不多。",
-        originLine2: "WhichOne 把這種無謂的猶豫變成一個有儀式感的小動作：輕點一下、轉一下、刮一下，結果出現，事情繼續往前走。",
-        originLine3: "它更像一個溫和的決定助手，而不是效率工具。它保留隨機的輕鬆，也讓過程有視覺、觸摸和回饋，使用者才會願意把這些小選擇交給它。",
-        originCardTitle: "處理生活裡的小摩擦。",
-        originCardCopy: "幾個人都說「隨便」，菜單翻了很久，週末計畫遲遲定不下來。WhichOne 關注的就是這些真實、輕微、但每天都會出現的停頓。",
-        railScenes: "場景",
-        scenesTitle: "選擇不是從功能開始，而是從一句「要不隨便吧」開始。",
-        scenesLead: "使用者打開應用時，常常已經帶著一個具體問題。WhichOne 把高頻場景提前整理好，讓使用者不必先想一套選項，馬上就能進入選擇。",
+        originLine2: "WhichOne 把這种小小的犹豫变成一个輕鬆的决策流程：選擇場景，讓黑貓带着使用者进入玩法，揭晓結果，然后继续往前走。",
+        originLine3: "它面向的是低风险的日常選擇：吃什么、去哪儿、做什么、谁先来、怎么分組。目标不是替使用者做重大判断，而是讓那些每天都會卡住人的小選擇更快、更有趣地完成。",
+        originCardTitle: "处理那些很小、但真的會卡住人的選擇。",
+        originCardCopy: "当每个答案都“也可以”時，WhichOne 给使用者一个明确的下一步，而不是继续停在空白里。",
+        railScenes: "選項",
+        scenesTitle: "從吃什么、去哪儿、做什么這些高频问题开始。",
+        scenesLead: "WhichOne 為餐食、地点和活动准备了內建選項。使用者可以根据偏好快速生成候選項，也可以在开始遊戲前自由編輯、刪除或补充選項。",
         sceneFoodCaption: "吃什麼",
-        sceneFoodTitle: "先讓晚飯動起來。",
-        sceneFoodCopy: "晚飯、外賣、聚餐前，最難的往往不是沒有選擇，而是每個人都可以。WhichOne 用預設選項降低開始成本，使用者也可以按偏好調整。",
-        sceneFoodPoint1: "預設餐食選項，打開後不用從零輸入。",
-        sceneFoodPoint2: "適合朋友聚餐、外賣選擇和工作日晚飯。",
+        sceneFoodTitle: "吃什么。",
+        sceneFoodCopy: "餐食選項帮助使用者跳过最常见的日常纠结。應用可以先给出一个可用列表，使用者再按口味新增、刪除或修改。",
+        sceneFoodPoint1: "适合晚饭、外卖、聚餐等高频場景。",
+        sceneFoodPoint2: "選項可編輯，讓結果更贴合真实偏好。",
         sceneTravelCaption: "去哪兒",
-        sceneTravelTitle: "給臨時出門一個方向。",
-        sceneTravelCopy: "週末、旅行或臨時出門沒有明確目標時，隨機結果不是替使用者規劃路線，而是幫計畫先邁出第一步。",
-        sceneTravelPoint1: "適合地點、周邊活動和短途計畫。",
+        sceneTravelTitle: "去哪儿。",
+        sceneTravelCopy: "当计划还没有目的地時，應用先给一个方向：附近地点、短途出门、周末安排或旅行候选，都可以成為决策選項。",
+        sceneTravelPoint1: "适合周边计划、旅行和周末出门。",
         sceneTravelPoint2: "結果只給方向，使用者仍然保留最後決定權。",
         sceneActivityCaption: "做什麼",
-        sceneActivityTitle: "把空閒時間變成一次小抽籤。",
-        sceneActivityCopy: "看電影、散步、做家務、玩遊戲，都可以被放進一次輕鬆選擇裡。結果出來後，使用者更容易繼續行動。",
-        sceneActivityPoint1: "適合休閒活動、家庭互動和個人待辦。",
+        sceneActivityTitle: "做什么。",
+        sceneActivityCopy: "休闲、家务、家庭互动和个人待办都可以变成一次輕鬆抽签。生成列表带来行动起点，編輯能力保留个人偏好。",
+        sceneActivityPoint1: "适合空闲時间、家庭活动和小任务。",
         sceneActivityPoint2: "讓「都行」變成一個可以執行的小結果。",
-        railGames: "遊戲玩法",
-        gamesTitle: "隨機結果需要一個好玩的過程。",
-        gamesCopy1: "如果只是給出一個答案，體驗會很薄。WhichOne 把結果藏在不同的小玩法裡：答案之書的翻頁、硬幣的正反、扭蛋機的抽取、大轉盤的減速、刮刮樂的揭曉，都讓隨機變得可看、可摸、可期待。",
-        gamesCopy2: "多人模式則把螢幕變成一個共享的現場。按手指、轉酒瓶、翻卡抽炸彈、扭蛋機等玩法，讓參與者一起等待結果。",
+        railGames: "模式",
+        gamesTitle: "单人模式和派对模式覆盖两类决策場景。",
+        gamesCopy1: "单人模式用于一个人自己的小選擇：選擇主题、編輯選項、揭晓結果，并保留历史方便再次游玩。",
+        gamesCopy2: "派对模式把决策变成多人共享的现场：可以抽一个人、围着一台裝置一起玩，也可以录入参與者后进行分組。",
         soloCaption: "單人遊戲",
         soloSmall: "從選項中抽出一個結果，並保留結果歷史。",
         partyCaption: "派對遊戲",
-        partySmall: "翻卡抽炸彈適合多人圍在同一台裝置前互動。",
-        railDesign: "視覺",
+        partySmall: "适合多人围在同一台裝置前互动。",
+        gameLibraryEyebrow: "不只是隨機",
+        gameLibraryTitle: "一組足夠精緻的決策小遊戲。",
+        gameLibraryCopy: "WhichOne 不是把同一個隨機器換幾套名字。轉盤、卡牌、扭蛋、硬幣、答案之書、骰子和派對工具會給選擇不同的節奏，讓反覆使用也保持新鮮。",
+        soloFlowEyebrow: "單人模式",
+        soloFlowTitle: "處理一個人自己的小選擇。",
+        soloFlowCopy: "使用者可以從預設場景或自訂主題開始，輸入選項後由匹配的小遊戲揭曉結果，再保存或分享答案。它讓私人的日常選擇足夠快，也不顯得單薄。",
+        partyFlowEyebrow: "派對模式",
+        partyFlowTitle: "處理屬於一群人的選擇。",
+        partyFlowCopy: "想馬上玩時可以直接開始；需要參與者時，也可以錄入名單，用來抽一個人或分組。結果不再是某個人宣布，而是圍著同一台裝置一起等待。",
+        railDesign: "黑貓 IP",
         designTitle: "明亮，但不是吵鬧；可愛，但不幼稚。",
         designCopy1: "高明度黃色讓「做決定」這件事顯得輕一點。黑色承擔文字、按鈕和黑貓形象的識別，形成穩定錨點。珊瑚紅、草綠色和粉色只做點到為止的輔助。",
-        designCopy2: "黑貓不是單純裝飾，它讓應用有一個陪伴者的氣質：有點調皮，像在旁邊說「別糾結了，試試看」。",
-        railCraft: "互動",
-        craftTitle: "細膩的回饋，讓結果更有分量。",
-        craftLead: "隨機類應用容易做得很輕飄。WhichOne 在觸摸回饋、物理運動和系統震動上做了更細的處理，讓每一種遊戲都有自己的節奏。",
-        craft1Title: "動作有前奏，也有收束",
-        craft1Copy: "轉盤減速、扭蛋抽取、卡牌翻開，都給使用者一個等待結果的過程。",
-        craft2Title: "觸摸不是只負責點擊",
-        craft2Copy: "多人按手指、刮刮樂和卡牌玩法都讓手勢成為體驗的一部分。",
-        craft3Title: "震動回饋對應關鍵瞬間",
-        craft3Copy: "操作確認、結果出現和遊戲狀態變化，都透過 Apple 裝置觸感回饋加強可感知性。",
-        touchCaption: "多人觸摸",
-        touchSmall: "多個參與者同時按住螢幕，結果透過高亮和回饋自然出現。",
-        railDevices: "裝置",
-        devicesTitle: "從顏色、字體到橫豎屏，都為真實使用場合作適配。",
-        devicesLead: "WhichOne 的介面不是只在一種理想尺寸下成立。它同時考慮 iPhone 與 iPad、橫屏與豎屏、多人圍坐與單人手持，也盡量讓色彩、字號和回饋對更多使用者保持清楚。",
-        accessColorTitle: "色弱友好的色彩策略",
-        accessColorCopy: "明黃色、黑色和輔助色並不只靠顏色本身區分狀態，還結合文字、圖形、按鈕形態和對比度，讓色弱使用者也能理解主要資訊。",
+        designCopy2: "它有点调皮的表情會缓解使用者纠结時的僵住感。應用传达的感觉是：别想太久，讓黑貓帮你先选一个。",
+        catIpEyebrow: "黑貓 IP",
+        catIpTitle: "用一个角色贯穿整个决策體驗。",
+        catIpCopy: "黑貓贯穿 WhichOne 的主题、內建選項、小遊戲、分組、卡牌、硬币和結果時刻。它讓應用不像一组松散工具，而更像一个陪使用者做决定的小伙伴。",
+        railCraft: "遊戲",
+        craftTitle: "遊戲感讓結果更容易被接受。",
+        craftLead: "應用不會立刻丢出一个答案，而是讓使用者看到转盘减速、卡牌翻开、扭蛋抽取、刮开結果或等待一次小揭晓。",
+        craft1Title: "玩法多，重复感少",
+        craft1Copy: "不同的遊戲形式讓高频决策不总像按同一个按钮。",
+        craft2Title: "手势也是答案的一部分",
+        craft2Copy: "转、刮、翻、点、多人觸摸，都讓决策过程更有参與感。",
+        craft3Title: "短暂等待讓結果更有分量",
+        craft3Copy: "期待感會讓随机答案更像一次小事件，尤其适合派对場景。",
+        touchCaption: "震动回饋",
+        touchSmall: "操作确认、結果出现和状态变化會配合 Apple 裝置触感回饋，讓关键瞬间更容易被感知。",
+        railDevices: "體驗",
+        devicesTitle: "明亮色系、清晰回饋和实用的辅助體驗。",
+        devicesLead: "WhichOne 使用高明度黄色、强黑色对比、活泼辅助色、震动回饋和大字體支持，讓體驗保持清楚、可点、可感知。",
+        accessColorTitle: "温暖黄色與黑色对比",
+        accessColorCopy: "黄色讓應用轻快，黑色承担文字、按钮和黑貓识别。辅助色用于場景和結果回饋，但不會只靠顏色传递关键信息。",
         accessTypeTitle: "2 倍字號與大字體",
         accessTypeCopy: "關鍵標題、選項、按鈕和結果回饋都考慮更大字體顯示。即使系統字體放大到 2 倍，核心流程仍盡量保持可讀、可點、可完成。",
         accessOrientTitle: "橫豎屏與 iPad",
         accessOrientCopy: "單人快速選擇更適合 iPhone 豎屏；多人派對、圍坐互動和分組場景則更適合 iPad 或橫屏展示。",
-        languagesTitle: "多語言",
-        languagesCopy: "覆蓋簡體中文、繁體中文、日語、韓語和英語，讓不同地區使用者都能直接理解場景、選項和結果。",
+        languagesTitle: "多語言與裝置布局",
+        languagesCopy: "覆盖简体中文、繁体中文、日语、韩语和英语，也考虑 iPhone、iPad、横屏、竖屏下的单人和多人使用。",
         notesTitle: "一些邊界說明。",
         notesLead: "WhichOne 的定位是日常輕量決策和多人互動，不用於高風險專業判斷。",
         noteUseStrong: "用途邊界：",
