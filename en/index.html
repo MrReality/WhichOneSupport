@@ -17,6 +17,7 @@
       --coral: #f47860;
       --leaf: #aebf70;
       --rose: #f3a8b5;
+      --warm-dark: #2f2a24;
       --shadow: 0 24px 60px rgba(26, 21, 9, 0.14);
       --max: 1160px;
       --radius: 8px;
@@ -339,6 +340,53 @@
       font-size: var(--type-label);
     }
 
+    #design,
+    #games,
+    #devices {
+      background: var(--warm-dark);
+      color: #fff;
+      box-shadow: 0 0 0 100vmax var(--warm-dark);
+      clip-path: inset(0 -100vmax);
+    }
+
+    #design h2,
+    #games h2,
+    #games h3,
+    #devices h2,
+    #devices h3 {
+      color: #fff;
+    }
+
+    #design .eyebrow,
+    #games .eyebrow,
+    #devices .eyebrow {
+      color: var(--sun);
+    }
+
+    #design .body-copy,
+    #games .body-copy,
+    #devices .body-copy {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    #design .chapter-rail,
+    #games .chapter-rail,
+    #devices .chapter-rail {
+      color: rgba(255, 255, 255, 0.54);
+    }
+
+    #design .chapter-rail .number,
+    #games .chapter-rail .number,
+    #devices .chapter-rail .number {
+      color: #fff;
+    }
+
+    #design .chapter-rail .label,
+    #games .chapter-rail .label,
+    #devices .chapter-rail .label {
+      color: rgba(255, 255, 255, 0.54);
+    }
+
     .manifesto {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -385,7 +433,7 @@
     }
 
     .dark-section {
-      background: #171717;
+      background: var(--warm-dark);
       color: #fff;
     }
 
@@ -422,6 +470,17 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
+    #scenes .scene-row {
+      border-color: var(--line);
+      background: var(--cream);
+      box-shadow: 0 14px 34px rgba(28, 22, 9, 0.08);
+    }
+
+    #scenes .scene-row:hover {
+      border-color: rgba(255, 216, 77, 0.72);
+      background: #fff;
+    }
+
     .scene-copy { max-width: 560px; }
     .scene-copy p {
       margin-top: 12px;
@@ -454,6 +513,15 @@
       font-weight: 650;
     }
 
+    #scenes .scene-copy p,
+    #scenes .scene-points li {
+      color: var(--muted);
+    }
+
+    #scenes .scene-points li {
+      border-top-color: var(--line);
+    }
+
     .phone {
       margin: 0;
       padding: 8px;
@@ -464,6 +532,12 @@
     }
 
     .dark-section .phone {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    #games .phone {
       border-color: rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.12);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
@@ -493,6 +567,8 @@
 
     .dark-section .phone figcaption { color: #fff; }
     .dark-section .phone figcaption small { color: rgba(255, 255, 255, 0.64); }
+    #games .phone figcaption { color: #fff; }
+    #games .phone figcaption small { color: rgba(255, 255, 255, 0.64); }
     .scene-row .phone figcaption { display: none; }
 
     .split {
@@ -595,6 +671,15 @@
       font-weight: 560;
     }
 
+    #games .mode-flow h3,
+    #devices .device-item h3 {
+      color: var(--ink);
+    }
+
+    #games .mode-flow .eyebrow {
+      color: var(--coral);
+    }
+
     .wide-visual {
       margin-top: 18px;
       padding: 12px;
@@ -694,16 +779,16 @@
       gap: 16px;
       align-items: start;
       padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--cream);
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
 
     .craft-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(255, 216, 77, 0.65);
-      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 216, 77, 0.72);
+      background: #fff;
     }
 
     .craft-card .mark {
@@ -715,7 +800,7 @@
 
     .craft-card p {
       margin-top: 12px;
-      color: rgba(255, 255, 255, 0.68);
+      color: var(--muted);
       font-weight: 560;
     }
 
@@ -1009,7 +1094,7 @@
     <div data-reveal>
       <div class="kicker"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span data-i18n="heroKicker">For life's little decisions</span></div>
       <h1 data-i18n="heroTitle">Decide with a little luck.</h1>
-      <p class="lead" data-i18n="heroLead">WhichOne is made for the small choices that do not need serious analysis, but still manage to slow you down. What to eat, where to go, what to do, who goes first: add the options, play a quick decision game, and let the answer appear naturally.</p>
+      <p class="lead" data-i18n="heroLead">WhichOne is made for the small choices that do not need serious analysis, but still manage to slow you down. What to eat, where to go, what to do, or who should go first: add your options, play a quick decision game, and let the answer appear naturally.</p>
       <div class="hero-actions" aria-label="App highlights">
         <span class="pill" data-i18n="pillSolo">Solo decisions</span>
         <span class="pill" data-i18n="pillScenes">Built-in scenarios</span>
@@ -1035,7 +1120,7 @@
         <div class="manifesto-text" data-reveal>
           <p data-i18n="originLine1">Many decisions feel tiring not because the options are complex, but because they are almost equally fine.</p>
           <p data-i18n="originLine2">WhichOne turns that hesitation into a light decision ritual: choose a scene, let the black cat guide the flow, reveal a result, and move on.</p>
-          <p class="quiet" data-i18n="originLine3">The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who goes first, or how to split a group. It keeps decisions quick while making the moment feel playful.</p>
+          <p class="quiet" data-i18n="originLine3">The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who should go first, or how to split a group. It keeps decisions quick while making the moment feel playful.</p>
         </div>
         <aside class="icon-panel" data-reveal>
           <img src="assets/icon.jpg" alt="WhichOne app icon" />
@@ -1049,13 +1134,13 @@
     <section class="section chapter" id="design">
       <div class="chapter-rail" data-reveal>
         <span class="number">02</span>
-        <span class="label" data-i18n="railDesign">Cat IP</span>
+        <span class="label" data-i18n="railDesign">Mascot</span>
       </div>
       <div class="design-board">
         <div data-reveal>
-          <div class="eyebrow" data-i18n="catIpEyebrow">Black Cat IP</div>
-          <h2 data-i18n="catIpTitle">One character carries the whole decision experience.</h2>
-          <p class="body-copy" data-i18n="catIpCopy">The black cat appears throughout WhichOne: topics, built-in options, mini-games, team splitting, cards, coins, and result moments. That consistent presence makes the app feel like a companion, not just a utility.</p>
+          <div class="eyebrow" data-i18n="catIpEyebrow">Black Cat Mascot</div>
+          <h2 data-i18n="catIpTitle">One character anchors the whole decision experience.</h2>
+          <p class="body-copy" data-i18n="catIpCopy">The black cat appears throughout WhichOne: topics, built-in options, mini-games, team assignment, cards, coins, and result moments. That consistent presence makes the app feel like a companion, not just a utility.</p>
           <p class="body-copy" data-i18n="designCopy2">Its mischievous expression softens the feeling of hesitation, as if the app is saying: stop overthinking, and let the cat help you pick one.</p>
         </div>
         <div class="identity-card" data-reveal>
@@ -1063,11 +1148,11 @@
         </div>
       </div>
       <div class="wide-visual" data-reveal>
-        <img src="assets/whichOne_cat.png" alt="WhichOne black cat IP system across topics, games, team splitting, cards, coins, and remove-ads visuals" />
+        <img src="assets/whichOne_cat.png" alt="WhichOne black cat mascot system across topics, games, team assignment, cards, coins, and remove-ads visuals" />
       </div>
     </section>
 
-    <section class="dark-section interactive" id="scenes">
+    <section class="interactive" id="scenes">
       <div class="section chapter">
         <div class="chapter-rail" data-reveal>
           <span class="number">03</span>
@@ -1076,7 +1161,7 @@
         <div>
           <div data-reveal>
             <div class="eyebrow">Built-in Options</div>
-            <h2 data-i18n="scenesTitle">Start from common questions: eat, go, do.</h2>
+            <h2 data-i18n="scenesTitle">Start from common questions: what to eat, where to go, and what to do.</h2>
             <p class="body-copy" data-i18n="scenesLead">WhichOne includes built-in option sets for food, places, and activities. Users can quickly generate choices based on their preferences, then edit the list freely before starting a decision game.</p>
           </div>
           <div class="scene-stack">
@@ -1121,7 +1206,7 @@
                 <p data-i18n="sceneActivityCopy">Leisure plans, chores, family time, and personal tasks can all become a light draw. Generated options create momentum, while editing keeps the list personal.</p>
                 <ul class="scene-points">
                   <li data-i18n="sceneActivityPoint1">Good for free time, family activities, and small tasks.</li>
-                  <li data-i18n="sceneActivityPoint2">Turns “anything is fine” into something executable.</li>
+                  <li data-i18n="sceneActivityPoint2">Turns “anything is fine” into an actionable choice.</li>
                 </ul>
               </div>
             </article>
@@ -1144,12 +1229,12 @@
         </div>
         <div class="duo" data-reveal>
           <figure class="phone">
-            <img src="assets/whichOne_single_game.png" alt="Single player gacha game in WhichOne" />
-            <figcaption><span data-i18n="soloCaption">Solo game</span><small data-i18n="soloSmall">Draw one result from the options and keep result history.</small></figcaption>
+            <img src="assets/whichOne_single_game.png" alt="Single-player draw game in WhichOne" />
+            <figcaption><span data-i18n="soloCaption">Solo Game:</span><small data-i18n="soloSmall">Draw one result from the options and keep result history.</small></figcaption>
           </figure>
           <figure class="phone">
             <img src="assets/whichOne_party_game.png" alt="Party card bomb game in WhichOne" />
-            <figcaption><span data-i18n="partyCaption">Party game</span><small data-i18n="partySmall">Designed for several people gathered around one device.</small></figcaption>
+            <figcaption><span data-i18n="partyCaption">Party Game:</span><small data-i18n="partySmall">Designed for several people gathered around one device.</small></figcaption>
           </figure>
         </div>
       </div>
@@ -1173,7 +1258,7 @@
       </div>
     </section>
 
-    <section class="dark-section craft" id="craft">
+    <section class="craft" id="craft">
       <div class="section chapter">
         <div class="chapter-rail" data-reveal>
           <span class="number">05</span>
@@ -1270,7 +1355,7 @@
           <p class="body-copy" data-i18n="notesLead">WhichOne is for everyday lightweight decisions and group interaction. It is not intended for high-risk or professional judgment.</p>
         </div>
         <div class="note-list">
-          <p><strong data-i18n="noteUseStrong">Use boundary:</strong> <span data-i18n="noteUse">Suitable for low-risk choices such as food, places, activities, who goes first, and group splitting. Not intended for financial, medical, or legal decisions.</span></p>
+          <p><strong data-i18n="noteUseStrong">Use boundary:</strong> <span data-i18n="noteUse">Suitable for low-risk choices such as food, places, activities, who should go first, and group assignment. Not intended for financial, medical, or legal decisions.</span></p>
           <p><strong data-i18n="noteRandomStrong">Random and playful:</strong> <span data-i18n="noteRandom">The app does not predict the future and does not include real-money betting, cash rewards, or gambling mechanics.</span></p>
           <p><strong data-i18n="noteDataStrong">Data and purchase:</strong> <span data-i18n="noteData">User options, recent picks, and history are primarily stored on device. An optional in-app purchase removes ads.</span></p>
           <div class="legal-links" aria-label="Legal links">
@@ -1301,13 +1386,13 @@
         navOrigin: "Overview",
         navScenes: "Options",
         navGames: "Modes",
-        navDesign: "Cat IP",
+        navDesign: "Mascot",
         navCraft: "Games",
         navDevices: "Care",
         navNotes: "Boundaries",
         heroKicker: "For life's little decisions",
         heroTitle: "Decide with a little luck.",
-        heroLead: "WhichOne is made for the small choices that do not need serious analysis, but still manage to slow you down. What to eat, where to go, what to do, who goes first: add the options, play a quick decision game, and let the answer appear naturally.",
+        heroLead: "WhichOne is made for the small choices that do not need serious analysis, but still manage to slow you down. What to eat, where to go, what to do, or who should go first: add your options, play a quick decision game, and let the answer appear naturally.",
         pillSolo: "Solo decisions",
         pillScenes: "Built-in scenarios",
         pillParty: "Party modes",
@@ -1316,11 +1401,11 @@
         railOrigin: "Overview",
         originLine1: "Many decisions feel tiring not because the options are complex, but because they are almost equally fine.",
         originLine2: "WhichOne turns that hesitation into a light decision ritual: choose a scene, let the black cat guide the flow, reveal a result, and move on.",
-        originLine3: "The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who goes first, or how to split a group. It keeps decisions quick while making the moment feel playful.",
+        originLine3: "The app is designed for low-stakes everyday choices: what to eat, where to go, what to do, who should go first, or how to split a group. It keeps decisions quick while making the moment feel playful.",
         originCardTitle: "For small choices that still get people stuck.",
         originCardCopy: "When every option seems acceptable, WhichOne gives users a clear next step instead of another blank moment.",
         railScenes: "Options",
-        scenesTitle: "Start from common questions: eat, go, do.",
+        scenesTitle: "Start from common questions: what to eat, where to go, and what to do.",
         scenesLead: "WhichOne includes built-in option sets for food, places, and activities. Users can quickly generate choices based on their preferences, then edit the list freely before starting a decision game.",
         sceneFoodCaption: "What to eat",
         sceneFoodTitle: "What to eat.",
@@ -1336,14 +1421,14 @@
         sceneActivityTitle: "What to do.",
         sceneActivityCopy: "Leisure plans, chores, family time, and personal tasks can all become a light draw. Generated options create momentum, while editing keeps the list personal.",
         sceneActivityPoint1: "Good for free time, family activities, and small tasks.",
-        sceneActivityPoint2: "Turns “anything is fine” into something executable.",
+        sceneActivityPoint2: "Turns “anything is fine” into an actionable choice.",
         railGames: "Modes",
         gamesTitle: "Two modes cover personal decisions and group moments.",
         gamesCopy1: "Solo mode keeps personal decisions short: choose a topic, edit the options, reveal a result, and keep a history for replay.",
         gamesCopy2: "Party mode turns decisions into shared moments: pick one person, play together around one device, or enter participants to split into teams.",
-        soloCaption: "Solo game",
+        soloCaption: "Solo Game:",
         soloSmall: "Draw one result from the options and keep result history.",
-        partyCaption: "Party game",
+        partyCaption: "Party Game:",
         partySmall: "Designed for several people gathered around one device.",
         gameLibraryEyebrow: "More Than Random",
         gameLibraryTitle: "A polished collection of decision games.",
@@ -1354,13 +1439,13 @@
         partyFlowEyebrow: "Party Mode",
         partyFlowTitle: "For decisions that belong to the group.",
         partyFlowCopy: "Party mode starts quickly when people just want to play, and it also supports participant lists for picking one person or splitting teams. The result becomes a shared moment around one device.",
-        railDesign: "Cat IP",
+        railDesign: "Mascot",
         designTitle: "Bright, not loud. Cute, not childish.",
         designCopy1: "Bright yellow makes decision-making feel lighter. Black anchors text, buttons, and the cat character. Coral, green, and pink stay as measured accents for scenarios and feedback.",
         designCopy2: "Its mischievous expression softens the feeling of hesitation, as if the app is saying: stop overthinking, and let the cat help you pick one.",
-        catIpEyebrow: "Black Cat IP",
-        catIpTitle: "One character carries the whole decision experience.",
-        catIpCopy: "The black cat appears throughout WhichOne: topics, built-in options, mini-games, team splitting, cards, coins, and result moments. That consistent presence makes the app feel like a companion, not just a utility.",
+        catIpEyebrow: "Black Cat Mascot",
+        catIpTitle: "One character anchors the whole decision experience.",
+        catIpCopy: "The black cat appears throughout WhichOne: topics, built-in options, mini-games, team assignment, cards, coins, and result moments. That consistent presence makes the app feel like a companion, not just a utility.",
         railCraft: "Games",
         craftTitle: "Play makes the result feel more satisfying.",
         craftLead: "Instead of showing an answer immediately, WhichOne lets users watch a wheel slow down, flip a card, draw a capsule, scratch a result, or wait through a small reveal.",
@@ -1386,7 +1471,7 @@
         notesTitle: "A few boundaries.",
         notesLead: "WhichOne is for everyday lightweight decisions and group interaction. It is not intended for high-risk or professional judgment.",
         noteUseStrong: "Use boundary:",
-        noteUse: "Suitable for low-risk choices such as food, places, activities, who goes first, and group splitting. Not intended for financial, medical, or legal decisions.",
+        noteUse: "Suitable for low-risk choices such as food, places, activities, who should go first, and group assignment. Not intended for financial, medical, or legal decisions.",
         noteRandomStrong: "Random and playful:",
         noteRandom: "The app does not predict the future and does not include real-money betting, cash rewards, or gambling mechanics.",
         noteDataStrong: "Data and purchase:",
