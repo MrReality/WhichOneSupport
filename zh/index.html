@@ -18,7 +18,7 @@
       --coral: #f47860;
       --leaf: #aebf70;
       --rose: #f3a8b5;
-      --warm-dark: #2f2a24;
+      --warm-dark: #40382f;
       --shadow: 0 24px 60px rgba(26, 21, 9, 0.14);
       --max: 1160px;
       --radius: 8px;
@@ -250,13 +250,13 @@
 
     .hero {
       width: min(1280px, calc(100% - 40px));
-      min-height: min(760px, calc(100vh - 96px));
+      min-height: min(680px, calc(100vh - 96px));
       margin: 30px auto 0;
       display: grid;
       grid-template-columns: 0.92fr 1.08fr;
       align-items: center;
       gap: 42px;
-      padding: 46px;
+      padding: 40px 46px;
       overflow: hidden;
       border: 1px solid rgba(23, 23, 23, 0.10);
       border-radius: 18px;
@@ -439,6 +439,13 @@
       line-height: 1.42;
     }
 
+    .manifesto-text p:nth-child(2) {
+      color: var(--muted);
+      font-size: var(--type-body);
+      font-weight: 650;
+      line-height: 1.72;
+    }
+
     .manifesto-text .quiet {
       color: var(--muted);
       font-size: var(--type-body);
@@ -492,16 +499,17 @@
 
     .scene-stack {
       display: grid;
-      gap: 22px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
       margin-top: 34px;
     }
 
     .scene-row {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.44fr) 1fr;
-      gap: 28px;
-      align-items: start;
-      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: stretch;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius);
       background: rgba(255, 255, 255, 0.06);
@@ -520,6 +528,18 @@
       box-shadow: 0 14px 34px rgba(28, 22, 9, 0.08);
     }
 
+    .interactive .scene-row:nth-child(1) {
+      background: #fff9df;
+    }
+
+    .interactive .scene-row:nth-child(2) {
+      background: #f7f8e7;
+    }
+
+    .interactive .scene-row:nth-child(3) {
+      background: #fff4ef;
+    }
+
     .interactive .scene-row:hover {
       border-color: rgba(255, 216, 77, 0.72);
       background: #fff;
@@ -527,6 +547,10 @@
 
     .scene-copy {
       max-width: 560px;
+    }
+
+    .interactive .scene-copy {
+      max-width: none;
     }
 
     .scene-copy h3 {
@@ -621,6 +645,11 @@
 
     #games .phone figcaption small {
       color: rgba(255, 255, 255, 0.64);
+    }
+
+    .interactive .scene-row .phone {
+      width: min(230px, 100%);
+      margin: 0 auto;
     }
 
     .scene-row .phone figcaption {
@@ -795,8 +824,8 @@
 
     .design-board {
       display: grid;
-      grid-template-columns: 1fr 0.82fr;
-      gap: 42px;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
+      gap: clamp(24px, 4vw, 42px);
       align-items: start;
     }
 
@@ -863,14 +892,14 @@
       border-radius: var(--radius);
       background: var(--cream);
       box-shadow: 0 16px 38px rgba(28, 22, 9, 0.09);
-      max-width: 360px;
+      width: clamp(240px, 28vw, 360px);
       justify-self: end;
       overflow: hidden;
     }
 
     .identity-card img {
       width: 100%;
-      max-height: 560px;
+      max-height: min(560px, 68vw);
       object-fit: cover;
       object-position: top;
       border-radius: var(--radius);
@@ -966,44 +995,51 @@
 
     .device-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: start;
       margin-top: 34px;
     }
 
-    .device-main,
-    .device-side {
+    .device-main {
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #fff;
     }
 
     .device-main {
-      padding: 18px;
+      padding: 16px;
     }
 
     .device-main img {
+      width: 100%;
+      max-height: 430px;
+      object-fit: contain;
+      object-position: center;
       border-radius: var(--radius);
     }
 
     .device-side {
       display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      border: 0;
+      background: transparent;
     }
 
     .device-item {
-      padding: 22px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .device-item:last-child {
-      border-bottom: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
     }
 
     .device-item p {
       margin-top: 8px;
       color: var(--muted);
+      font-size: var(--type-small);
       font-weight: 560;
+      line-height: 1.55;
     }
 
     .language-list {
@@ -1156,6 +1192,10 @@
         justify-self: stretch;
       }
 
+      .identity-card {
+        width: min(100%, 420px);
+      }
+
       .craft .split {
         grid-template-columns: 1fr;
       }
@@ -1165,7 +1205,9 @@
       }
 
       .feature-strip,
-      .mode-showcase {
+      .mode-showcase,
+      .scene-stack,
+      .device-side {
         grid-template-columns: 1fr;
       }
 
@@ -1548,12 +1590,12 @@
 
     <section class="section chapter" id="devices">
       <div class="chapter-rail" data-reveal><span class="number">06</span><span class="label">Care</span></div>
-      <div data-reveal><div class="eyebrow">Visual & Accessibility</div><h2>明亮色系、清晰反馈和实用的辅助体验。</h2><p class="body-copy">WhichOne 使用高明度黄色、强黑色对比、活泼辅助色、震动反馈和大字体支持，让体验保持清楚、可点、可感知。</p>
+      <div data-reveal><div class="eyebrow">Visual & Accessibility</div><h2>明亮色系、清晰反馈和实用的辅助体验。</h2><p class="body-copy">温暖色系、触感反馈、大字体支持和多语言布局，让体验清楚但不沉重。</p>
         <div class="device-grid"><div class="device-main"><img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" /></div><div class="device-side">
-          <div class="device-item"><h3>温暖黄色与黑色对比</h3><p>黄色让应用轻快，黑色承担文字、按钮和黑猫识别。辅助色用于场景和结果反馈，但不会只靠颜色传递关键信息。</p></div>
-          <div class="device-item"><h3>震动反馈</h3><p>操作确认、结果出现和状态变化会配合 Apple 设备触感反馈，让关键瞬间更容易被感知。</p></div>
-          <div class="device-item"><h3>2 倍字号与大字体</h3><p>关键标题、选项、按钮和结果反馈都考虑更大字体显示。即使系统字体放大到 2 倍，核心流程仍尽量保持可读、可点、可完成。</p></div>
-          <div class="device-item"><h3>多语言与设备布局</h3><p>覆盖简体中文、繁体中文、日语、韩语和英语，也考虑 iPhone、iPad、横屏、竖屏下的单人和多人使用。</p><div class="language-list" aria-label="Supported languages"><span class="language">简体中文</span><span class="language">繁體中文</span><span class="language">日本語</span><span class="language">한국어</span><span class="language">English</span></div></div>
+          <div class="device-item"><h3>温暖黄色与黑色对比</h3><p>黄色保持轻快，黑色承担文字、按钮和黑猫识别。</p></div>
+          <div class="device-item"><h3>震动反馈</h3><p>操作确认和结果出现配合 Apple 设备触感反馈。</p></div>
+          <div class="device-item"><h3>2 倍字号与大字体</h3><p>核心控件在字体放大时仍尽量保持可读、可点。</p></div>
+          <div class="device-item"><h3>多语言与设备布局</h3><p>五种语言，适配 iPhone、iPad、横屏和竖屏。</p><div class="language-list" aria-label="Supported languages"><span class="language">简体中文</span><span class="language">繁體中文</span><span class="language">日本語</span><span class="language">한국어</span><span class="language">English</span></div></div>
         </div></div>
       </div>
     </section>

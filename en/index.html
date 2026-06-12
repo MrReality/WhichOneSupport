@@ -17,7 +17,7 @@
       --coral: #f47860;
       --leaf: #aebf70;
       --rose: #f3a8b5;
-      --warm-dark: #2f2a24;
+      --warm-dark: #40382f;
       --shadow: 0 24px 60px rgba(26, 21, 9, 0.14);
       --max: 1160px;
       --radius: 8px;
@@ -236,13 +236,13 @@
 
     .hero {
       width: min(1280px, calc(100% - 40px));
-      min-height: min(760px, calc(100vh - 96px));
+      min-height: min(680px, calc(100vh - 96px));
       margin: 30px auto 0;
       display: grid;
       grid-template-columns: 0.92fr 1.08fr;
       align-items: center;
       gap: 42px;
-      padding: 46px;
+      padding: 40px 46px;
       overflow: hidden;
       border: 1px solid rgba(23, 23, 23, 0.10);
       border-radius: 18px;
@@ -403,6 +403,13 @@
       line-height: 1.42;
     }
 
+    .manifesto-text p:nth-child(2) {
+      color: var(--muted);
+      font-size: var(--type-body);
+      font-weight: 650;
+      line-height: 1.72;
+    }
+
     .manifesto-text .quiet {
       color: var(--muted);
       font-size: var(--type-body);
@@ -448,16 +455,17 @@
 
     .scene-stack {
       display: grid;
-      gap: 22px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
       margin-top: 34px;
     }
 
     .scene-row {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.44fr) 1fr;
-      gap: 28px;
-      align-items: start;
-      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: stretch;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius);
       background: rgba(255, 255, 255, 0.06);
@@ -476,12 +484,20 @@
       box-shadow: 0 14px 34px rgba(28, 22, 9, 0.08);
     }
 
+    #scenes .scene-row:nth-child(1) { background: #fff9df; }
+    #scenes .scene-row:nth-child(2) { background: #f7f8e7; }
+    #scenes .scene-row:nth-child(3) { background: #fff4ef; }
+
     #scenes .scene-row:hover {
       border-color: rgba(255, 216, 77, 0.72);
       background: #fff;
     }
 
     .scene-copy { max-width: 560px; }
+
+    #scenes .scene-copy {
+      max-width: none;
+    }
     .scene-copy p {
       margin-top: 12px;
       color: rgba(255, 255, 255, 0.68);
@@ -569,6 +585,10 @@
     .dark-section .phone figcaption small { color: rgba(255, 255, 255, 0.64); }
     #games .phone figcaption { color: #fff; }
     #games .phone figcaption small { color: rgba(255, 255, 255, 0.64); }
+    #scenes .phone {
+      width: min(230px, 100%);
+      margin: 0 auto;
+    }
     .scene-row .phone figcaption { display: none; }
 
     .split {
@@ -700,8 +720,8 @@
 
     .design-board {
       display: grid;
-      grid-template-columns: 1fr 0.82fr;
-      gap: 42px;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
+      gap: clamp(24px, 4vw, 42px);
       align-items: start;
     }
 
@@ -742,7 +762,7 @@
     .swatch.rose { background: var(--rose); }
 
     .identity-card {
-      max-width: 360px;
+      width: clamp(240px, 28vw, 360px);
       justify-self: end;
       overflow: hidden;
       padding: 18px;
@@ -754,7 +774,7 @@
 
     .identity-card img {
       width: 100%;
-      max-height: 560px;
+      max-height: min(560px, 68vw);
       object-fit: cover;
       object-position: top;
       border-radius: var(--radius);
@@ -806,21 +826,39 @@
 
     .device-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: start;
       margin-top: 34px;
     }
 
-    .device-main { padding: 18px; background: #fff; }
-    .device-main img { border-radius: var(--radius); }
-    .device-side { display: grid; background: #fff; }
-    .device-item { padding: 22px; border-bottom: 1px solid var(--line); }
-    .device-item:last-child { border-bottom: 0; }
+    .device-main { padding: 16px; background: #fff; }
+    .device-main img {
+      width: 100%;
+      max-height: 430px;
+      object-fit: contain;
+      object-position: center;
+      border-radius: var(--radius);
+    }
+    .device-side {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      border: 0;
+      background: transparent;
+    }
+    .device-item {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
     .device-item p {
       margin-top: 8px;
       color: var(--muted);
+      font-size: var(--type-small);
       font-weight: 560;
+      line-height: 1.55;
     }
 
     .language-list {
@@ -940,9 +978,12 @@
       .stage-card { width: auto; transform: none; }
       .duo .phone:nth-child(2) { margin-top: 0; }
       .identity-card, .craft .phone { max-width: none; justify-self: stretch; }
+      .identity-card { width: min(100%, 420px); }
       .craft .split { grid-template-columns: 1fr; }
       .feature-strip,
-      .mode-showcase {
+      .mode-showcase,
+      .scene-stack,
+      .device-side {
         grid-template-columns: 1fr;
       }
 
@@ -1313,7 +1354,7 @@
       <div data-reveal>
         <div class="eyebrow">Visual & Accessibility</div>
         <h2 data-i18n="devicesTitle">Bright colors, clear feedback, and practical accessibility.</h2>
-        <p class="body-copy" data-i18n="devicesLead">WhichOne uses bright yellow, strong black contrast, playful accent colors, haptic feedback, and support for larger text sizes so the experience stays readable, tappable, and easy to understand.</p>
+        <p class="body-copy" data-i18n="devicesLead">A warm color system, haptics, larger text support, and multilingual layouts keep the experience clear without making the app feel heavy.</p>
         <div class="device-grid">
           <div class="device-main">
             <img src="assets/whichOne_0thumbnail.png" alt="WhichOne promotional screens" />
@@ -1321,19 +1362,19 @@
           <div class="device-side">
             <div class="device-item">
               <h3 data-i18n="accessColorTitle">A warm yellow system with black contrast</h3>
-              <p data-i18n="accessColorCopy">Yellow keeps the app bright and light, while black anchors text, buttons, and the cat character. Accent colors support scenes and results, but important meaning is not carried by color alone.</p>
+              <p data-i18n="accessColorCopy">Yellow keeps the app bright; black anchors text, buttons, and the cat character.</p>
             </div>
             <div class="device-item">
               <h3 data-i18n="touchCaption">Haptic feedback</h3>
-              <p data-i18n="touchSmall">Confirmations, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.</p>
+              <p data-i18n="touchSmall">Confirmations and result reveals use Apple device haptics.</p>
             </div>
             <div class="device-item">
               <h3 data-i18n="accessTypeTitle">Support for larger text sizes</h3>
-              <p data-i18n="accessTypeCopy">Important titles, options, buttons, and result feedback are designed to remain readable and tappable when the system text size is increased.</p>
+              <p data-i18n="accessTypeCopy">Core controls stay readable and tappable when text size increases.</p>
             </div>
             <div class="device-item">
               <h3 data-i18n="languagesTitle">Languages and device layouts</h3>
-              <p data-i18n="languagesCopy">Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported. The interface also considers iPhone, iPad, portrait, and landscape layouts for solo and group use.</p>
+              <p data-i18n="languagesCopy">Five languages, iPhone and iPad, portrait and landscape layouts.</p>
               <div class="language-list" aria-label="Supported languages">
                 <span class="language">简体中文</span>
                 <span class="language">繁體中文</span>
@@ -1456,18 +1497,18 @@
         craft3Title: "A short wait gives the result weight",
         craft3Copy: "A little anticipation makes a random answer feel more like a small event, especially in party mode.",
         touchCaption: "Haptic feedback",
-        touchSmall: "Confirmations, result reveals, and state changes use Apple device haptics to make feedback easier to perceive.",
+        touchSmall: "Confirmations and result reveals use Apple device haptics.",
         railDevices: "Care",
         devicesTitle: "Bright colors, clear feedback, and practical accessibility.",
-        devicesLead: "WhichOne uses bright yellow, strong black contrast, playful accent colors, haptic feedback, and support for larger text sizes so the experience stays readable, tappable, and easy to understand.",
+        devicesLead: "A warm color system, haptics, larger text support, and multilingual layouts keep the experience clear without making the app feel heavy.",
         accessColorTitle: "A warm yellow system with black contrast",
-        accessColorCopy: "Yellow keeps the app bright and light, while black anchors text, buttons, and the cat character. Accent colors support scenes and results, but important meaning is not carried by color alone.",
+        accessColorCopy: "Yellow keeps the app bright; black anchors text, buttons, and the cat character.",
         accessTypeTitle: "Support for larger text sizes",
-        accessTypeCopy: "Important titles, options, buttons, and result feedback are designed to remain readable and tappable when the system text size is increased.",
+        accessTypeCopy: "Core controls stay readable and tappable when text size increases.",
         accessOrientTitle: "Portrait, landscape, and iPad",
         accessOrientCopy: "Solo decisions feel natural on iPhone in portrait, while party play and group selection benefit from iPad or landscape layouts.",
         languagesTitle: "Languages and device layouts",
-        languagesCopy: "Simplified Chinese, Traditional Chinese, Japanese, Korean, and English are supported. The interface also considers iPhone, iPad, portrait, and landscape layouts for solo and group use.",
+        languagesCopy: "Five languages, iPhone and iPad, portrait and landscape layouts.",
         notesTitle: "A few boundaries.",
         notesLead: "WhichOne is for everyday lightweight decisions and group interaction. It is not intended for high-risk or professional judgment.",
         noteUseStrong: "Use boundary:",
